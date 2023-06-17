@@ -1,6 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\ClassifyController;
+use App\Http\Controllers\ProductController;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,26 +16,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 Route::get('/', function () {
-    return view('pages.home');
+    return view('backend.pages.home');
 })->name('dashboard');
 Route::get('blank-page', function () {
     return view('pages.blank-page');
 })->name('blank-page');
-Route::get('bootstrap-elements', function () {
-    return view('pages.bootstrap-elements');
-})->name('bootstrap-elements');
-Route::get('bootstrap-grid', function () {
-    return view('pages.bootstrap-grid');
-})->name('bootstrap-grid');
-Route::get('charts', function () {
-    return view('pages.charts');
-})->name('charts');
-Route::get('forms', function () {
-    return view('pages.forms');
-})->name('forms');
-Route::get('index-rtl', function () {
-    return view('pages.index-rtl');
-})->name('index-rtl');
-Route::get('tables', function () {
-    return view('pages.tables');
-})->name('tables');
+
+Route::resource('classify', ClassifyController::class);
+Route::resource('category', CategoryController::class);
+Route::resource('product', ProductController::class);

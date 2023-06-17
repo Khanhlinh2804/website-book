@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Category;
+use App\Models\Product;
 
 class ProductController extends Controller
 {
@@ -13,7 +15,8 @@ class ProductController extends Controller
      */
     public function index()
     {
-        //
+        $product = Product::orderByDesc('id','desc')->paginate(15);
+        return view('backend.product.list', compact('product'));
     }
 
     /**
@@ -23,7 +26,8 @@ class ProductController extends Controller
      */
     public function create()
     {
-        //
+        $category = Category::all();
+        return view('product.add', compact('category'));
     }
 
     /**
@@ -34,7 +38,15 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        if ($request->has('file')) {
+            $file = $request->file;
+            $fileName = time() . $file->getClientOriginalName();
+            $file->move(public_path('uploads'), $fileName);
+        }
+        $request->merge((['image' => $fileName]));
+        // dd($request->all()); 
+        Product::create($request->all());
+        return redirect()->route('product.index');
     }
 
     /**

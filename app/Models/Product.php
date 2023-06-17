@@ -8,4 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class Product extends Model
 {
     use HasFactory;
+    protected $fillable = [	'name'	,'price',	'sale_price'	,'status'	,'description'	,'image'	,'category_id'];
+    public function categories()
+    {
+        return $this->hasOne(Classify::class, 'id', 'category_id');
+    }
 }
