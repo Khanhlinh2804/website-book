@@ -1,4 +1,6 @@
 @extends('backend.index')
+@section('title','Edit Category ')
+    
 
 @section('content')
 <div id="page-wrapper">
@@ -43,4 +45,5 @@
         </form>
     </div>
 </div>
+{{-- @endsection --}}
 @endsection

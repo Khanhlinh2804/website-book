@@ -1,9 +1,11 @@
 @extends('backend.index')
+@section('title','list Category')
+    
 @section('content')
 <div id="page-wrapper"> 
     <div class="container-fluid">
         <div class="row">
-            <div class="col-lg-12">
+            
                 @if (session('success'))
                     <div class="alert alert-info alert-dismissible fade show" role="alert">
                         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -15,6 +17,10 @@
                         </strong>
                     </div>
                 @endif
+                <div class="col-lg-12">
+
+                </div>
+                <div class="col-lg-12">
                 <a href="{{ route('category.create') }}" class="btn btn-outline-success"> ADD CATEGORY</a>
                 <p></p>
                 <table class="table ">
@@ -58,6 +64,7 @@
 
         </div>
     </div>
-    {{-- {{$category->links() }} --}}
+    {{$categories->links() }}
 </div>
+{{-- @endsection --}}
 @endsection

@@ -13,7 +13,7 @@ class CategoryUpdate extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,16 @@ class CategoryUpdate extends FormRequest
     public function rules()
     {
         return [
-            "name"=>'required|unique:category,name|max:255|min:8' . $this->id
+            "name"=>'required|unique:category,name|max:255|min:5' 
         ];
     }
+    public function messages(){
+        return[
+            'name.required'=>'Category name cannot be empty',
+            'name.min'=>'Category name cannot be shorter than 5 characters and longer than 50 characters';
+            'name.max'=>'Category name cannot be shorter than 5 characters and longer than 50 characters';
+        ]
+    }
+
+    
 }

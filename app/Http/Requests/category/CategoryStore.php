@@ -13,7 +13,7 @@ class CategoryStore extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -27,11 +27,11 @@ class CategoryStore extends FormRequest
             "category_store" =>"required|min:5|max:50"
         ];
     }
-    // public function messages(){
-    //     return [
-    //         'category_store.required'=>'Category name cannot be empty';
-    //         'category_store.min'=>'Category name cannot be shorter than 5 characters and longer than 50 characters';
-    //         'category_store.max'=>'Category name cannot be shorter than 5 characters and longer than 50 characters';
-    //     ];
-    // }
+    public function messages(){
+        return [
+            'category_store.required'=>'Category name cannot be empty';
+            'category_store.min'=>'Category name cannot be shorter than 5 characters and longer than 50 characters';
+            'category_store.max'=>'Category name cannot be shorter than 5 characters and longer than 50 characters';
+        ];
+    }
 }

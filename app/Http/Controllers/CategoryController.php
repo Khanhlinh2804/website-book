@@ -5,8 +5,8 @@ use App\Models\Classify;
 use App\Models\Category;
 
 use Illuminate\Http\Request;
-use App\Request\category\CategoryUpdate;
-use App\Request\category\CategoryUpdateRequest;
+use App\Requests\category\CategoryStore;
+use App\Requests\category\CategoryUpdateRequest;
 
 class CategoryController extends Controller
 {
@@ -17,7 +17,7 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $categories = Category::orderByDesc('id','desc')->paginate(5);
+        $categories = Category::orderByDesc('id','desc')->paginate(10);
         // dd($category);
         return view('backend.category.list', compact('categories'));
     }
@@ -43,7 +43,7 @@ class CategoryController extends Controller
     {
         
         Category::create($request->all());
-        return redirect()->route('backend.category.index');
+        return redirect()->route('category.index');
     }
 
     /**
@@ -78,18 +78,25 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(CategoryUpdateRequest $request, Category $categories)
+    public function update(CategoryUpdateRequest $request, Category $category)
     {
         $form_data = $request->all('name','status');
-        try {
-            $categories->update($form_data);
-            return redirect()->route('category.index')->with('success','update category successful');
-            // Category::find($id)->update($request->all());
-            //code...
-        } catch (\Throwable $th) {
-            return redirect()->route('category.index')->with('success','update category unsuccessful');
-        }
-        return redirect()->route('category.index');
+        $request->validated();
+        $category= Category::fild($id); 
+        // try {
+        //     $categories->update($form_data);
+        //     return redirect()->route('category.index')->with('success','update category successful');
+        //     // Category::find($id)->update($request->all());
+        //     //code...
+        // } catch (\Throwable $th) {
+        //     return redirect()->route('category.index')->with('success','update category unsuccessful');
+        // }
+        // return redirect()->route('category.index');
+        Category::fild($id)->update([
+            'name'=>$request->name,
+            'status'=>$request->status,
+        ]);
+        return redirect()->route('category.index')->with('success','update category successful');
 
     }
 

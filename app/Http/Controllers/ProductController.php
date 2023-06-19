@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Requests\ProductStoreRequest;
+use App\Http\Requests\ProductEdit;
 use App\Models\Category;
 use App\Models\Product;
 
@@ -15,8 +17,10 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $product = Product::orderByDesc('id','desc')->paginate(15);
-        return view('backend.product.list', compact('product'));
+        $products = Product::orderByDesc('id','desc')->paginate(10);
+        return view('backend.product.list', compact('products'));
+
+        Product::with('categories');
     }
 
     /**
@@ -27,7 +31,7 @@ class ProductController extends Controller
     public function create()
     {
         $category = Category::all();
-        return view('product.add', compact('category'));
+        return view('backend.product.add', compact('category'));
     }
 
     /**
@@ -36,17 +40,22 @@ class ProductController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ProductStoreRequest $request)
     {
-        if ($request->has('file')) {
-            $file = $request->file;
-            $fileName = time() . $file->getClientOriginalName();
-            $file->move(public_path('uploads'), $fileName);
-        }
-        $request->merge((['image' => $fileName]));
-        // dd($request->all()); 
-        Product::create($request->all());
-        return redirect()->route('product.index');
+        
+        $request->validated();
+        $file_name = time() . $request->image->getClientOriginalName();
+        $request->image->move(public_path('uploads'),$file_name);
+        Product::create([
+            'name'=> $request->name,
+            'price'=> $request->price,
+            'sale_price' =>$request->sale_price,
+            'image' => $file_name,
+            'status' => $request->status,
+            'description' => $request->description,
+            'category_id' => $request->category_id
+        ]);
+        return redirect()->route('product.index')->with('success', 'insert data successfully');
     }
 
     /**
@@ -68,7 +77,9 @@ class ProductController extends Controller
      */
     public function edit($id)
     {
-        //
+        $cat = Category::all();
+        $pro = Product::find($id);
+        return view('backend.product.edit', compact('cat','pro'));
     }
 
     /**
@@ -78,9 +89,27 @@ class ProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(ProductStoreRequest $request, $id)
     {
-        //
+        $pro = Product::find($id);
+        $request->validated();
+        $file_name = $pro->image;
+        if($request->has('image')){
+            $file_name = time() . $request->image->getClientOriginalName();
+            // unlink('upload/'. $pro->image);
+            $request->image->move(public_path('uploads'), $file_name);
+            // $request->image->move(public_path('/uploads',$file_name)); 
+        }
+        Product::find($id)->update([
+            'name'=> $request->name,
+            'price'=> $request->price,
+            'sale_price' =>$request->sale_price,
+            'image' => $file_name,
+            'status' => $request->status,
+            'description' => $request->description,
+            'category_id' => $request->category_id
+        ]);
+        return redirect()->route('product.index')->with('success','Update Product SuccessFully');
     }
 
     /**
@@ -91,6 +120,7 @@ class ProductController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Product::find($id)->delete();
+        return redirect()->route('product.index')->with('success','Delete Product Successfully');
     }
 }
