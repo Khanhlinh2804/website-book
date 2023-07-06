@@ -27,17 +27,20 @@ class ProductStoreRequest extends FormRequest
             "name"=> "required|min:4|max:100",
             "price" => "required|numeric|gte:1",
             "sale_price" => "numeric|gte:0|lte:price",
-            "image" => "required|mimes:png,ipg,jpeg,webp,jfif"
+            "image" => "required|mimes:png,ipg,jpeg,webp,jfif",
+            "quantity" =>"required|numeric|gte:1"
         ];
     }
     public function messages(){
         return [
             'name.required'=>'Product name cannot be empty',
-            'name.min'=>'Product name cannot be shorter than 5 characters and longer than 100 characters',
-            'name.max'=>'Product name cannot be shorter than 5 characters and longer than 100 characters',
-            'price.required'=> 'The price cannot be left blank',
-            'image.required'=> 'The image cannot be left blank',
-            'image.mimes'=> 'The image is not in the correct format'
+            'name.min' => 'Category name must be at least 5 characters',
+            'name.max' => 'Category name cannot exceed 50 characters',
+            'price.required'=> 'The price cannot be empty',
+            'image.required'=> 'The image cannot be empty',
+            'image.mimes'=> 'The image is not in the correct format',
+            'quantity.required' => 'Product quantity cannot be empty',
+            'quantuty.numeric' => 'Quantity must be entered as a number'
         ];
     }
 }

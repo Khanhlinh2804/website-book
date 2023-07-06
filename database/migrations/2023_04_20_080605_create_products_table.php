@@ -19,8 +19,6 @@ return new class extends Migration
             $table->integer('price');
             $table->integer('sale_price');
             $table->integer('quantity');
-            $table->text('detail');
-            $table->text('keyword');
             $table->bigInteger('status')->default(1);
             $table->text('description')->nullable();
             $table->string('image', 255);

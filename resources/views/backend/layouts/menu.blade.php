@@ -4,10 +4,16 @@
                 <a href="{{route('dashboard')}}"><i class="fa fa-fw fa-dashboard"></i> Dashboard</a>
             </li>
             <li>
-                <a href="{{route('category.index')}}"><i class="fa fa-fw fa-bar-chart-o"></i> Category</a>
+                <a href="{{route('classify.index')}}"><i class="fa fa-fw fa-edit"></i></i> Classify</a>
             </li>
             <li>
-                <a href="{{route('product.index')}}"><i class="fa fa-fw fa-bar-chart-o"></i> Product</a>
+                <a href="{{route('category.index')}}"><i class="fa fa-fw fa-edit"></i></i> Category</a>
+            </li>
+            <li>
+                <a href="{{route('product.index')}}"><i class="fa fa-fw fa-edit"></i></i> Product</a>
+            </li>
+            <li>
+                <a href="{{route('account.index')}}"><i class="fa fa-fw fa-edit"></i></i> Account</a>
             </li>
             {{-- <li>
                 <a href="javascript:;" data-toggle="collapse" data-target="#demo"><i

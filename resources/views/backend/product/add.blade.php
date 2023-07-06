@@ -31,6 +31,15 @@
                     @enderror
             </div>
             <div class="form-group">
+                <label for="exampleInputEmail1">Quantity</label>
+                <input type="number" name="quantity" class="form-control" placeholder="Product's quantity" 
+                value="{{old('quantity')}}">
+                    @error('quantity')
+                    <p class="text-danger">{{ $message }}</p>
+                    @enderror
+            </div>
+            
+            <div class="form-group">
                 <label for="exampleInputEmail1">Image</label>
                 <input type="file" name="image" id="image" class="form-control" >
                 @error('image')

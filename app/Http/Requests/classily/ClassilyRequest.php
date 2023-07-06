@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class CategoryStore extends FormRequest
+class ClassilyRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,14 +24,14 @@ class CategoryStore extends FormRequest
     public function rules()
     {
         return [
-            "category_store" =>"required|min:5|max:50"
+            'name'=>'bail|required|max:50|min:3'
         ];
     }
     public function messages(){
-        return [
-            'category_store.required'=>'Category name cannot be empty';
-            'category_store.min'=>'Category name cannot be shorter than 5 characters and longer than 50 characters';
-            'category_store.max'=>'Category name cannot be shorter than 5 characters and longer than 50 characters';
-        ];
+        return[
+            'name.required'=>'Classify name cannot empty',
+            'name.min' => 'Category name must be at least 3 characters',
+            'name.max' => 'Category name cannot exceed 50 characters'
+        ]
     }
 }

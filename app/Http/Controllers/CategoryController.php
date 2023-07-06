@@ -5,8 +5,8 @@ use App\Models\Classify;
 use App\Models\Category;
 
 use Illuminate\Http\Request;
-use App\Requests\category\CategoryStore;
-use App\Requests\category\CategoryUpdateRequest;
+use App\Http\Requests\category\CategoryValidate;
+// use App\Http\Requests\CategoryUpdateRequest;
 
 class CategoryController extends Controller
 {
@@ -78,21 +78,11 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(CategoryUpdateRequest $request, Category $category)
+    public function update(CategoryValidate $request, Category $category)
     {
         $form_data = $request->all('name','status');
         $request->validated();
-        $category= Category::fild($id); 
-        // try {
-        //     $categories->update($form_data);
-        //     return redirect()->route('category.index')->with('success','update category successful');
-        //     // Category::find($id)->update($request->all());
-        //     //code...
-        // } catch (\Throwable $th) {
-        //     return redirect()->route('category.index')->with('success','update category unsuccessful');
-        // }
-        // return redirect()->route('category.index');
-        Category::fild($id)->update([
+        $category->update([
             'name'=>$request->name,
             'status'=>$request->status,
         ]);

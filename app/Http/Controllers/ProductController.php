@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Requests\ProductStoreRequest;
+use App\Http\Requests\product\ProductUpdateRequest;
 use App\Http\Requests\ProductEdit;
 use App\Models\Category;
 use App\Models\Product;
@@ -50,10 +51,12 @@ class ProductController extends Controller
             'name'=> $request->name,
             'price'=> $request->price,
             'sale_price' =>$request->sale_price,
+            'quantity'=> $request->quantity,
             'image' => $file_name,
             'status' => $request->status,
             'description' => $request->description,
-            'category_id' => $request->category_id
+            'category_id' => $request->category_id,
+            // 'classify_id' => $request->classify_id
         ]);
         return redirect()->route('product.index')->with('success', 'insert data successfully');
     }
@@ -89,7 +92,7 @@ class ProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(ProductStoreRequest $request, $id)
+    public function update(ProductUpdateRequest $request, $id)
     {
         $pro = Product::find($id);
         $request->validated();
@@ -100,14 +103,16 @@ class ProductController extends Controller
             $request->image->move(public_path('uploads'), $file_name);
             // $request->image->move(public_path('/uploads',$file_name)); 
         }
-        Product::find($id)->update([
+        $pro->update([
             'name'=> $request->name,
             'price'=> $request->price,
             'sale_price' =>$request->sale_price,
+            'quantity' => $request ->quantity,
             'image' => $file_name,
             'status' => $request->status,
             'description' => $request->description,
-            'category_id' => $request->category_id
+            'category_id' => $request->category_id,
+            // 'classify_id' => $request->classify_id
         ]);
         return redirect()->route('product.index')->with('success','Update Product SuccessFully');
     }

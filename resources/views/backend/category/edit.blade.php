@@ -13,9 +13,9 @@
             <div class="form-group">
                 <label for="exampleInputEmail1">Name</label>
                 <input type="text" name="name" class="form-control" id="exampleInputEmail1" value="{{ $categories->name }}">
-                {{-- @error('name')
+                @error('name')
                     <p class="text-danger">{{ $message }}</p>
-                @enderror --}}
+                @enderror
             </div>
             <div class="form-group">
                 <label for="exampleFormControlSelect1">Category</label>
