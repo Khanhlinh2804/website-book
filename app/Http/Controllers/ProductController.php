@@ -6,7 +6,8 @@ use Illuminate\Http\Request;
 use App\Http\Requests\ProductStoreRequest;
 use App\Http\Requests\product\ProductUpdateRequest;
 use App\Http\Requests\ProductEdit;
-use App\Models\Category;
+use App\Models\Author;
+use App\Models\Classify;
 use App\Models\Product;
 
 class ProductController extends Controller
@@ -19,9 +20,16 @@ class ProductController extends Controller
     public function index()
     {
         $products = Product::orderByDesc('id','desc')->paginate(10);
-        return view('backend.product.list', compact('products'));
+        Product::with('authors','classifies');
+        // dd(request()->key);
+        // cach 1: search 
+        // if($key = request()->key){
+        //     $products = Product::orderByDesc('id','desc')->where('name','like', '%'.$key.'%')->paginate(10);
 
-        Product::with('categories');
+        // }
+        // cách 2: search 
+        $products = Product::orderByDesc('id','desc')->search()->paginate(10);
+        return view('backend.product.list', compact('products'));
     }
 
     /**
@@ -31,8 +39,9 @@ class ProductController extends Controller
      */
     public function create()
     {
-        $category = Category::all();
-        return view('backend.product.add', compact('category'));
+        $class = Classify::all(); 
+        $author = Author::all();
+        return view('backend.product.add', compact('author','class'));
     }
 
     /**
@@ -55,8 +64,8 @@ class ProductController extends Controller
             'image' => $file_name,
             'status' => $request->status,
             'description' => $request->description,
-            'category_id' => $request->category_id,
-            // 'classify_id' => $request->classify_id
+            'author_id' => $request->author_id,
+            'classify_id' => $request->classify_id
         ]);
         return redirect()->route('product.index')->with('success', 'insert data successfully');
     }
@@ -80,9 +89,10 @@ class ProductController extends Controller
      */
     public function edit($id)
     {
-        $cat = Category::all();
+        $cala = Classify::all();
+        $cat = Author::all();
         $pro = Product::find($id);
-        return view('backend.product.edit', compact('cat','pro'));
+        return view('backend.product.edit', compact('cat','pro','cala'));
     }
 
     /**
@@ -99,7 +109,6 @@ class ProductController extends Controller
         $file_name = $pro->image;
         if($request->has('image')){
             $file_name = time() . $request->image->getClientOriginalName();
-            // unlink('upload/'. $pro->image);
             $request->image->move(public_path('uploads'), $file_name);
             // $request->image->move(public_path('/uploads',$file_name)); 
         }
@@ -111,8 +120,8 @@ class ProductController extends Controller
             'image' => $file_name,
             'status' => $request->status,
             'description' => $request->description,
-            'category_id' => $request->category_id,
-            // 'classify_id' => $request->classify_id
+            'author_id' => $request->author_id,
+            'classify_id' => $request->classify_id
         ]);
         return redirect()->route('product.index')->with('success','Update Product SuccessFully');
     }

@@ -61,17 +61,17 @@
                 <input type="text" name="description" class="form-control" placeholder="Product's Description" >
             </div>
             <div class="form-group">
-                <label for="exampleFormControlSelect1">Category</label>
+                <label for="exampleFormControlSelect1">Author</label>
                 <select class="form-control" id="exampleFormControlSelect1" name="category_id">
                     @foreach ($cat as $item)
-                        <option value="{{ $item->id }}" {{old('category_id') == $item->id ? 'check':''}} >{{$item->id}} - {{ $item->name }}</option>
+                        <option value="{{ $item->id }}" {{old('author_id') == $item->id ? 'check':''}} >{{$item->id}} - {{ $item->name }}</option>
                     @endforeach
                 </select>
             </div>
             <div class="form-group">
-                <label for="exampleFormControlSelect1"></label>
+                <label for="exampleFormControlSelect1">Classify</label>
                 <select class="form-control" id="exampleFormControlSelect1" name="classify_id">
-                    @foreach ($cat as $item)
+                    @foreach ($cala as $item)
                         <option value="{{ $item->id }}" {{old('classify_id') == $item->id ? 'check':''}} >{{$item->id}} - {{ $item->name }}</option>
                     @endforeach
                 </select>

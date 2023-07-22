@@ -7,7 +7,7 @@
                 <a href="{{route('classify.index')}}"><i class="fa fa-fw fa-edit"></i></i> Classify</a>
             </li>
             <li>
-                <a href="{{route('category.index')}}"><i class="fa fa-fw fa-edit"></i></i> Category</a>
+                <a href="{{route('author.index')}}"><i class="fa fa-fw fa-edit"></i></i> Author</a>
             </li>
             <li>
                 <a href="{{route('product.index')}}"><i class="fa fa-fw fa-edit"></i></i> Product</a>
@@ -40,13 +40,13 @@
                 </ul>
             </li> --}}
             <li>
-                <a href=""><i class="fa fa-fw fa-table"></i> Tables</a>
+                <a href=""><i class="fa fa-fw fa-table"></i> Order</a>
             </li>
             <li>
                 <a href=""><i class="fa fa-fw fa-edit"></i> Forms</a>
             </li>
             <li>
-                <a href=""><i class="fa fa-fw fa-desktop"></i> Bootstrap Elements</a>
+                <a href=""><i class="fa fa-fw fa-desktop"></i> Slide</a>
             </li>
             <li>
                 <a href=""><i class="fa fa-fw fa-wrench"></i> Bootstrap Grid</a>

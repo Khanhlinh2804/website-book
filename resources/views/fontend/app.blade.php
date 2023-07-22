@@ -21,6 +21,10 @@
 
     {{-- CSS  --}} 
     <link rel="stylesheet" href="{{asset("fontend/css/app.css") }}">
+    <link rel="stylesheet" href="{{asset("fontend/css/cart.css") }}">
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="/resources/demos/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/themes/base/jquery-ui.min.css" integrity="sha512-ELV+xyi8IhEApPS/pSj66+Jiw+sOT1Mqkzlh8ExXihe4zfqbWkxPRi8wptXIO9g73FSlhmquFlUOuMSoXz5IRw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
 </head>
 <body>
@@ -44,7 +48,7 @@
                             <a class="nav-link pl-5" href="{{route('home.index')}}">HOME</a>
                         </li>
                         <li>
-                            <a class="nav-link pl-5" href="#">PRODUCT</a>
+                            <a class="nav-link pl-5" href="{{route('home.shop')}}">PRODUCT</a>
                         </li>
                         <li>
                             <a class="nav-link pl-5" href="{{route('home.contact')}}">CONTACT</a>
@@ -58,20 +62,21 @@
                         
                        
                         @guest
-                            @if (Route::has('login'))
+                            {{-- @if (Route::has('login'))
                                 <li class="nav-item">
-                                    <a class="nav-link pl-5" href="{{ route('login') }}"><i class="fa-regular fa-user" style="color: #0a0a0a;"></i></a>
+                                    <a class="nav-link pl-5" href="{{ route('login') }}">hii</a>
                                 </li>
-                            @endif
-
+                            @endif --}}
                            
-                            {{-- @if (Route::has('register'))
+                            @if (Route::has('register'))
                                 <li class="nav-item">
                                     <a class="nav-link pl-5" href="{{ route('register') }}">REGIEST</a>
                                 </li>
-                            @endif --}}
+                            @endif
                                 <li class="nav-item">
-                                    <a class="nav-link pl-5" href="{route('')}"><i class="fa-solid fa-bag-shopping" style="color: #0e0d0d;"></i></a>
+                                    <a class="nav-link pl-5" href="{{route('cart.cart')}}" >
+                                        <i class="fa-solid fa-bag-shopping" style="color: #0e0d0d;">
+                                    </i> {{$cart->total_quantity}}</a>
                                 </li>
                         @else
                             <li class="nav-item dropdown">
@@ -133,16 +138,16 @@
                 <h3 class="pl-4 ">Links</h3>
                 <ul class="none">
                     <li class="pt-4">
-                        <a href="">Home</a>
+                        <a href="{{route('home.index')}}" class="a-text-decoration">Home</a>
                     </li>
                     <li class="pt-4">
-                        <a href="">Store</a>
+                        <a href="{{route('home.shop')}}" class="a-text-decoration">Store</a>
                     </li>
                     <li class="pt-4">
-                        <a href="">About</a>
+                        <a href="{{route('home.about')}}" class="a-text-decoration">About</a>
                     </li>
                     <li class="pt-4">
-                        <a href="">Contact</a>
+                        <a href="{{route('home.contact')}}" class="a-text-decoration">Contact</a>
                     </li>
                 </ul>
             </div>
@@ -178,7 +183,39 @@
 </body>
     {{-- js  --}}
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+    <script src="{{ asset('fontend/js/cart.js') }}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/jquery-ui.min.js" integrity="sha512-57oZ/vW8ANMjR/KQ6Be9v/+/h6bq9/l3f0Oc7vn6qMqyhvPd1cvKBRWWpzu0QoneImqr2SkmO4MSqU+RpHom3Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    <script>
+    $( function() {
+        $( "#slider-range" ).slider({
+        orientation: "horizontal",
+        range: true,
+        values: [ 0, 100 ],
+        // cộng giá trị
+        slide: function( event, ui ) {
+            $( "#amount" ).val( "$" + ui.values[ 0 ] + " - $" + ui.values[ 1 ] );
+        }
+        });
+        // xem giá trị đó 
+        $( "#amount" ).val( "$" + $( "#slider-range" ).slider( "values", 0 ) +
+        " - $" + $( "#slider-range" ).slider( "values", 1 ) );
+    } );
+  </script>
+
+  <script type="text/javascript">
+    $(document).ready(function(){
+        $('#sort').on('change',function(){
+            var url =$(this).val();
+            if(url){
+                window.location = url;
+            }return false;
+        });
+    });
+  </script>
     {{-- buldle  --}}
 <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>

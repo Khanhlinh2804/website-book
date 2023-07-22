@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Providers;
+use App\Helper\CartHelper;
 
 use Illuminate\Support\ServiceProvider;
 
@@ -13,7 +14,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        // $this->app->singleton(CartHelper::class, function ($app) {
+        //     return new CartHelper();
+        // });
     }
 
     /**
@@ -23,6 +26,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        view()->composer('*', function ($view) {
+            $view->with([
+                'cart' => new CartHelper()
+            ]);            
+        });
     }
 }

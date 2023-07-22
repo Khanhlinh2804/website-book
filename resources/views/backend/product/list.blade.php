@@ -3,10 +3,17 @@
     
 @section('content')
 <div id="page-wrapper">
-    
-    {{-- <div class="container-fluid"> --}}
-        <a href="{{route('product.create')}}" class="btn btn-outline-primary"> ADD PRODUCT</a>
-        <p></p>
+        <div style="display: inline;">
+            <p></p>
+            <form class="form-inline my-2 my-lg-0" action="">
+                <a href="{{ route('product.create') }}" class="btn btn-outline-primary">ADD PRODUCT</a>
+                
+                <input class="form-control mr-sm-2" name="key" placeholder="Search by name..." aria-label="Search">
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+            </form>
+        </div>
+        <hr> 
+
         <table class="table">
             <thead>
                 <tr>
@@ -15,8 +22,9 @@
                     <th>Price</th>
                     <th>sale_price</th>
                     <th>Quantity</th>
-                    <th>image</th>
-                    <th>Category_id</th>
+                    <th>Image</th>
+                    <th>Author</th>
+                    <th>Classify</th>
                     <th>Description</th>
                     <th>Status</th>
                     <th>Action</th>
@@ -40,8 +48,10 @@
                             </style>
                             <img src="{{url('uploads')}}/{{$item->image}}" class="w-20" alt="">
                         </td>
-                        
-                        <td>{{$item->categories->name}}</td>
+                        <td>
+                            {{-- {{$item->authors->name}} --}}
+                        </td>
+                        <td>{{$item->classifies->name}}</td>
                         <td>{{$item->description}}</td>
                         <td>
                             @if ($item->status)
@@ -64,6 +74,7 @@
             </tbody>
         </table>
     {{-- </div> --}}
+    {{$products->appends(request()->all())->links()}}
 </div>
 @endsection
 {{-- @endsection --}}

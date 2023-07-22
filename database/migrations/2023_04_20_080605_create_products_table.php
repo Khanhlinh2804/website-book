@@ -22,8 +22,10 @@ return new class extends Migration
             $table->bigInteger('status')->default(1);
             $table->text('description')->nullable();
             $table->string('image', 255);
-            $table->bigInteger('category_id')->unsigned();
-            $table->foreign('category_id')->references('id')->on('categories');
+            $table->bigInteger('classify_id')->unsigned();
+            $table->foreign('classify_id')->references('id')->on('classifies');
+            $table->bigInteger('author_id')->unsigned();
+            $table->foreign('author_id')->references('id')->on('authors');
             $table->timestamps();
         });
     }

@@ -32,8 +32,8 @@
             <div class="row pt-5">
                 <div>
                     <div class="col-lg-4">
-                        <i class="fa-sharp fa-solid fa-gift" style="color: #000000;"></i>
-                        <a href="" class="about-a-icon-text">
+                        <i class="fa-sharp fa-solid fa-gift" style="color: #ce4d4d; font-size: 60px;  "></i>
+                        <a href="" class="about-a-icon-text about-text-decoration ">
                             <p> Make the Best Present </p>
                             <p>
                                 Make the Best Present

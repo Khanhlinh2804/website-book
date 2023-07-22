@@ -15,7 +15,7 @@ class ClassifyController extends Controller
      */
     public function index()
     {
-        $cation = Classify::orderByDesc('id','desc')->paginate(3)->withQueryString();
+        $cation = Classify::orderByDesc('id','desc')->paginate(5)->withQueryString();
         // dd($cation);
         return view('backend.classify.list', compact('cation'));
     }

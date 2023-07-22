@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('phone', 10)->nullable();
             $table->string('address', 255)->nullable();
             $table->string('district', 200)->nullable();
+            $table->bigInteger('status')->default(1);
             $table->rememberToken();
             $table->timestamps();
         });

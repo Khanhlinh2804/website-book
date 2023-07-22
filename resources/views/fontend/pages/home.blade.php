@@ -63,10 +63,12 @@
                 
             <div class="col-lg-3 pt-5">
                 <div class="" style="">
-                    <img src="uploads/{{ $item->image }}"
-                        class="card-img-top img-product" alt="...">
+                    <a href="{{route('home.detail',['id'=>$item->id])}}">
+                        <img src="{{url('uploads')}}/{{$item->image}}"
+                            class="card-img-top img-product" alt="...">
+                    </a>
                     <div class="card-body">
-                        <a href="#" class="bold-text">
+                        <a href="{{route('home.detail',['id'=>$item->id])}}" class="bold-text a-text-decoration">
                             <p class="text-center ">Name: {{ $item->name }}</p>
                         </a>
                         {{-- <div class="rating pl-5">
@@ -81,7 +83,7 @@
                             <input type="radio" id="star1" name="rating" value="1">
                             <label for="star1"></label>
                         </div> --}}
-                        <h5 class="card-title color-red text-center">{{$item->price}}</h5>
+                        <h5 class="card-title color-red text-center">{{$item->price}} $</h5>
                     </div>
                 </div>
             </div>
@@ -151,10 +153,10 @@
         <div class="row">
             @forelse ($saleProducts as $item)
                 <div class="col-lg-3 pt-5 ">
-                    <a href="">
+                    <a href="{{route('home.detail',['id'=>$item->id])}}">
                         <div class="zoom-container">
                             <img class="zoom-image"
-                                src="uploads/{{$item->image}}" alt="Ảnh">
+                                src="{{url('uploads')}}/{{$item->image}}" alt="Ảnh">
                                 <div class="sale-overlay">
                                     <span>{{ number_format((1 - $item->sale_price / $item->price) * 100, 2, '.', ',') }}
                                     %</span>
@@ -162,13 +164,13 @@
                         </div>
                     </a>
                     <div class="card-body">
-                        <a href="#" class="bold-text">
-                            <p class="text-center ">name</p>
+                        <a href="{{route('home.detail',['id'=>$item->id])}}" class="bold-text">
+                            <p class="text-center a-text-decoration">{{$item->name}}</p>
                         </a>
-                        <div class="d-flex">
-                            <h5 class="card-title strike-through text-center">sale ($)</h5>
+                        <div class="d-flex pl-5">
+                            <h5 class="card-title strike-through text-center" style="color: rgb(166, 166, 166)">{{$item->price}} $</h5>
                             <p class="color-red pl-2 pr-2 bold-text ">-</p>
-                            <h5 class="card-title color-red text-center">price ($)</h5>
+                            <h5 class="card-title color-red text-center" >{{$item->sale_price}} $</h5>
                         </div>                       
                     </div>
                 </div>
@@ -213,18 +215,36 @@
           @forelse ($RandomProduct as $item)
               
           <div class=" pt-5 ">
-              <img src="uploads/{{ $item->image }}" alt="" style="height:450px" style="width: 450px">
+              <img src="{{url('uploads')}}/{{$item->image}}" alt="" style="height:500px; width:400px" style="width: 450px">
           </div>
           <div class="pl-5 pt-5">
-              <p class="font-size45 text selector"></p>
-              <p class="red-text">Author : <span class="text-797979"> {{$item->description}}</span></p>
+              <p class="font-size45 text selector">{{$item->name}}</p>
+              {{-- <p class="red-text">Author : <span class="text-797979"> {{$item->author->name}}</span></p> --}}
               <p class="text-797979">{{$item->description}}</p>
-              <p class="text-797979"> Price:  <span class="card-title strike-through text-center size-30 "> {{$item->price}} $</span></p>
-              <p class="text-797979"> Price Sale:  <span class="red-text bold-text size-30 "> {{$item->sale_price}} $</span></p>
-              <button
-                class="mb-5 mt-4 p-3 pl-4 pr-4 bold-text white-text black-backgroundS borderless-button">
-                VIEW SHOP
-              </button>
+              @if($item->sale_price != 0)
+                <p class="text-797979">
+                    Price:
+                    <span class="card-title  strike-through text-center size-30">{{$item->price}} $</span>
+                </p>
+                <p class="text-797979">
+                    Price Sale:
+                    <span class="red-text bold-text size-30">{{$item->sale_price}} $</span>
+                </p>
+            @else
+                <p class="text-797979">
+                    Price:
+                    <span class="card-title red-text text-center size-30">{{$item->price}} $</span>
+                </p>
+            @endif
+
+
+            <a href="{{route('home.detail',['id'=>$item->id])}}">
+                <button
+                  class="mb-5 mt-4 p-3 pl-4 pr-4 bold-text white-text black-backgroundS borderless-button">
+                  VIEW SHOP
+                </button>
+
+            </a>
           </div>
           @empty
           @endforelse
@@ -238,14 +258,14 @@
         @forelse ($RandomProducts as $item)
             <div class="d-flex">
                 <div>
-                    <a href="">
+                    <a href="{{route('home.detail',['id'=>$item->id])}}">
                         <form action="" method="post" >
-                            <img src="uploads/{{$item->image}}" alt="" class="product-image">
+                            <img src="{{url('uploads')}}/{{$item->image}}" alt="" class="product-image">
                         </form>
                     </a>
                 </div>
                 <div class="random-products">
-                    <a href="" class="">{{$item->name}}</a>
+                    <a href="" class="a-text-decoration">{{$item->name}}</a>
                     <p class="red-text">{{$item->sale_price}} $</p>
                 </div>   
             </div>
