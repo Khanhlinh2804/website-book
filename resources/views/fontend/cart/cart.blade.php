@@ -1,5 +1,5 @@
 @extends('fontend.app')
-@section('titles','About US')
+@section('titles','Cart')
 @section('content')
 <div class="linh-ne">
     <div class="black">
@@ -79,15 +79,16 @@
                                     <div>
                                         <i class="fa-solid fa-circle-plus" onclick="increaseQuantity('{{ $item['id'] }}')"></i>
                                     </div>
+                                    {{-- <input type="number" value="{{ $item['quantity'] }}"> --}}
                                 </div>
                             </form>
                         </td>
 
                         <td style="color: #de3241">
-                          giá nè
+                          {{ number_format($item['quantity'] * $item['sale_price'])  }}
                         </td>
                         <td class="cart-icon-cancel">
-                            <a href="{{route('cart.remove',['id'=>$item['id']])}}">
+                            <a href="{{route('cart.remove',['id'=>$item['id']])}}" onclick="return confirm('Bạn có chắc không?')">
                                 <i class="fa-solid fa-x cart-icon-cancel " style="color: #000000; "></i>
                             </a>
                         </td>
@@ -145,7 +146,8 @@
                 <div class="pt-4">
                     <a href="{{route('order.checkout')}}"  style="text-decoration: none">
                         <div class="button-center">
-                            <button class="mb-5 p-3  pl-5 pr-5  pl-50 white-text cart-button  borderless-button">Continue shopping</button>
+                            <button class="mb-5 p-3  pl-5 pr-5  pl-50 white-text cart-button  borderless-button"
+                            >Continue shopping</button>
                         </div>
                     </a>
                 </div>

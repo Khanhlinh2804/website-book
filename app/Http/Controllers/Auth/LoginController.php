@@ -38,18 +38,19 @@ class LoginController extends Controller
         $this->middleware('guest')->except('logout');
     }
 
-    public function login()
-    {
-        $credentials = request()->only(['email', 'password']);
-        $token = auth()->attempt($credentials);
-        if ($token) {
-            return redirect('/');
-        } else {
-            return redirect('/login')->with('error', 'Invalid credentials');
-        }
-    }
-    public function logout(){
-        
-    }
+    // public function login()
+    // {
+    //     $credentials = request()->only(['email', 'password']);
+    //     $token = auth()->attempt($credentials);
+    //     if ($token) {
+    //         return view('fontend.pages.shop');
+    //     } else {
+    //         return redirect('/login')->with('error', 'Invalid credentials');
+    //     }
+    // }
+    // public function logout(){
+
+    // }
+    
     
 }

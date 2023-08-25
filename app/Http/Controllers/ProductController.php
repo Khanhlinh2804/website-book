@@ -9,6 +9,7 @@ use App\Http\Requests\ProductEdit;
 use App\Models\Author;
 use App\Models\Classify;
 use App\Models\Product;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class ProductController extends Controller
 {
@@ -19,18 +20,46 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $products = Product::orderByDesc('id','desc')->paginate(10);
         Product::with('authors','classifies');
-        // dd(request()->key);
         // cach 1: search 
+        // $products = Product::orderByDesc('id','desc')->paginate(10);
+        // dd(request()->key);
         // if($key = request()->key){
-        //     $products = Product::orderByDesc('id','desc')->where('name','like', '%'.$key.'%')->paginate(10);
-
-        // }
-        // cách 2: search 
-        $products = Product::orderByDesc('id','desc')->search()->paginate(10);
+            //     $products = Product::orderByDesc('id','desc')->where('name','like', '%'.$key.'%')->paginate(10);
+            
+            // }
+            // cách 2: search 
+        $products = Product::orderByDesc('id','desc')->search()->paginate(5);
         return view('backend.product.list', compact('products'));
     }
+    public function trashed(){
+        Product::with('authors','classifies');
+        $products = Product::onlyTrashed()->orderByDesc('id','desc')->search()->paginate(10);
+        return view('backend.product.trash', compact('products'));
+    }
+
+
+    public function restore($id){
+        $product = Product::withTrashed()->find($id);
+
+        if ($product) {
+            $product->restore();
+            return redirect()->route('admin.product.index')->with('success', 'Product restored successfully.');
+        } else {
+            return redirect()->route('admin.product.index')->with('error', 'Product not found.');
+        }
+    }
+    public function deleteforce($id){
+        $product = Product::withTrashed()->find($id);
+
+        if ($product) {
+            $product->forceDelete();
+            return redirect()->route('admin.product.index')->with('success', 'Product restored successfully.');
+        } else {
+            return redirect()->route('admin.product.index')->with('error', 'Product not found.');
+        }
+    }
+
 
     /**
      * Show the form for creating a new resource.
@@ -49,7 +78,7 @@ class ProductController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
-     */
+     */ 
     public function store(ProductStoreRequest $request)
     {
         
@@ -67,7 +96,7 @@ class ProductController extends Controller
             'author_id' => $request->author_id,
             'classify_id' => $request->classify_id
         ]);
-        return redirect()->route('product.index')->with('success', 'insert data successfully');
+        return redirect()->route('admin.product.index')->with('success', 'insert data successfully');
     }
 
     /**
@@ -76,12 +105,9 @@ class ProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
-    {
-        //
-    }
 
-    /**
+
+    /** 
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
@@ -89,10 +115,10 @@ class ProductController extends Controller
      */
     public function edit($id)
     {
+        $author = Author::all();
         $cala = Classify::all();
-        $cat = Author::all();
-        $pro = Product::find($id);
-        return view('backend.product.edit', compact('cat','pro','cala'));
+        $pro = Product::with('author','classifies')->find($id);
+        return view('backend.product.edit', compact('pro', 'author', 'cala'));
     }
 
     /**
@@ -105,12 +131,12 @@ class ProductController extends Controller
     public function update(ProductUpdateRequest $request, $id)
     {
         $pro = Product::find($id);
+        // dd($pro);
         $request->validated();
         $file_name = $pro->image;
         if($request->has('image')){
             $file_name = time() . $request->image->getClientOriginalName();
-            $request->image->move(public_path('uploads'), $file_name);
-            // $request->image->move(public_path('/uploads',$file_name)); 
+            $request->image->move(public_path('uploads'), $file_name); 
         }
         $pro->update([
             'name'=> $request->name,
@@ -123,7 +149,7 @@ class ProductController extends Controller
             'author_id' => $request->author_id,
             'classify_id' => $request->classify_id
         ]);
-        return redirect()->route('product.index')->with('success','Update Product SuccessFully');
+        return redirect()->route('admin.product.index')->with('success','Update Product SuccessFully');
     }
 
     /**
@@ -134,7 +160,13 @@ class ProductController extends Controller
      */
     public function destroy($id)
     {
-        Product::find($id)->delete();
-        return redirect()->route('product.index')->with('success','Delete Product Successfully');
+        $product = Product::find($id);
+        try {
+            $product->delete();
+            return redirect()->route('admin.product.index')->with('success','Delete Product Successfully');
+        } catch (\Throwable $th) {
+            return redirect()->route('no_delete');
+        }
+        
     }
 }

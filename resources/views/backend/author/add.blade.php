@@ -2,7 +2,7 @@
 @section('content')
     <div id="page-wrapper">
     <div class="container-fluid">
-        <form action="{{ route('author.store') }}" method="post">
+        <form action="{{ route('admin.author.store') }}" method="post">
             @csrf
             <div class="form-group">
                 <label for="exampleInputEmail1">Name</label>

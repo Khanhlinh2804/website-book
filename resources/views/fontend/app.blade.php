@@ -61,24 +61,27 @@
                         </li> --}}
                         
                        
+                        <li class="nav-item">
+                            <div class="d-flex">
+                            <a class="nav-link pl-5" href="{{route('cart.cart')}}" >
+                                    <i class="fa-solid fa-bag-shopping" style="color: #0e0d0d;"></i> 
+                                    {{$cart->total_quantity}}
+                                </a>
+                            </div>
+                        </li>
                         @guest
-                            {{-- @if (Route::has('login'))
-                                <li class="nav-item">
-                                    <a class="nav-link pl-5" href="{{ route('login') }}">hii</a>
+                            @if (Route::has('login'))
+                                <li class="nav-item"> 
+                                    <a class="nav-link pl-5" href="{{ route('login') }}">LOGIN</a>
                                 </li>
-                            @endif --}}
+                            @endif 
                            
-                            @if (Route::has('register'))
+                            {{-- @if (Route::has('register'))
                                 <li class="nav-item">
                                     <a class="nav-link pl-5" href="{{ route('register') }}">REGIEST</a>
                                 </li>
-                            @endif
-                                <li class="nav-item">
-                                    <a class="nav-link pl-5" href="{{route('cart.cart')}}" >
-                                        <i class="fa-solid fa-bag-shopping" style="color: #0e0d0d;">
-                                    </i> {{$cart->total_quantity}}</a>
-                                </li>
-                        @else
+                            @endif --}}
+                            @else
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     {{ Auth::user()->name }}
@@ -87,8 +90,8 @@
                                 <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                                        {{ __('Logout') }}
+                                        document.getElementById('logout-form').submit();">
+                                        Logout
                                     </a>
 
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
@@ -116,26 +119,31 @@
                 </a>
             </div>
             <div class="col-lg-3">
-                <h3>What's new</h3>
+                <h3 class="text-fooler">What's new</h3>
                 <form action="" method="post" class="pt-4">
                     <div class="card mb-3" style="max-width: 540px;">
+                        {{-- @foreach ($footer as $item) --}}
+                            
                         <div class="row no-gutters">
                             <div class="col-md-4">
-                                <img src="..." alt="...">
+                                <a href="">
+                                    {{-- <img src="{{url('uploads')}}/{{$item->image}}" alt="..."> --}}
+                                </a>
                             </div>
                             <div class="col-md-8">
                                 <div class="card-body">
-                                    <h5 class="card-title">Card title</h5>
+                                    {{-- <h5 class="card-title">{{$item->name}}</h5> --}}
                                     <p class="card-text"></p>
-                                    <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                                    {{-- <p class="card-text"><small class="text-muted">{{$item->author->name}}</small></p> --}}
                                 </div>
                             </div>
                         </div>
+                        {{-- @endforeach --}}
                     </div>
                 </form>
             </div>
             <div class="col-lg-3">
-                <h3 class="pl-4 ">Links</h3>
+                <h3 class="pl-4 text-fooler ">Links</h3>
                 <ul class="none">
                     <li class="pt-4">
                         <a href="{{route('home.index')}}" class="a-text-decoration">Home</a>
@@ -152,13 +160,13 @@
                 </ul>
             </div>
             <div class="col-lg-3">
-                <h3>GET IN TOUCH</h3>
-                <p class="pt-4">
+                <h3 class="text-fooler">GET IN TOUCH</h3>
+                <p class="pt-4 text-fooler">
                     Germany —
                     785 15h Street, Office 478
                     Berlin, De 81566
                 </p>
-                <p>
+                <p class="text-fooler">
                     Khanhlinh6863@gmail.com
                 </p>
                 <p class="p-footer">
@@ -180,44 +188,70 @@
         {{-- </div> --}}
     </div>
 </footer>
+{{-- sắp xếp --}}
+    <script>
+    $('#sort').change(function() {
+        var sortOption = $(this).val();
+        $.ajax({
+            url: '/sort-products',
+            type: 'GET',
+            data: {sort: sortOption},
+            success: function(data) {
+                $('#productList').empty();
+                $.each(data, function(index, product) {
+                    $('#productList').append('<div>' + product.name + ' - Price: ' + product.price + '</div>');
+                });
+            },
+            error: function(error) {
+                console.error('Error:', error);
+            }
+        });
+    });
+    </script>
+
+    {{-- load  --}}
+    <script>
+        $(document).ready(function() {
+            $('#city').change(function() {
+                var city_id = $(this).val();
+                if (city_id !== '') {
+                    $.ajax({
+                        url: '/get-districts/' + city_id,
+                        type: 'GET',
+                        success: function(data) {
+                            var districts = data;
+                            var districtDropdown = $('#district');
+                            districtDropdown.empty();
+                            districtDropdown.append('<option value="">--Select the district--</option>');
+                            $.each(districts, function(index, district) {
+                                districtDropdown.append('<option value="' + district.id + '">' + district.name + '</option>');
+                            });
+                        }
+                    });
+                }
+            });
+        });
+    </script>
+
+
 </body>
     {{-- js  --}}
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
-    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+    {{-- <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script> --}}
     <script src="{{ asset('fontend/js/cart.js') }}"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/jquery-ui.min.js" integrity="sha512-57oZ/vW8ANMjR/KQ6Be9v/+/h6bq9/l3f0Oc7vn6qMqyhvPd1cvKBRWWpzu0QoneImqr2SkmO4MSqU+RpHom3Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/jquery-ui.min.js" integrity="sha512-57oZ/vW8ANMjR/KQ6Be9v/+/h6bq9/l3f0Oc7vn6qMqyhvPd1cvKBRWWpzu0QoneImqr2SkmO4MSqU+RpHom3Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> --}}
 
-    <script>
-    $( function() {
-        $( "#slider-range" ).slider({
-        orientation: "horizontal",
-        range: true,
-        values: [ 0, 100 ],
-        // cộng giá trị
-        slide: function( event, ui ) {
-            $( "#amount" ).val( "$" + ui.values[ 0 ] + " - $" + ui.values[ 1 ] );
-        }
-        });
-        // xem giá trị đó 
-        $( "#amount" ).val( "$" + $( "#slider-range" ).slider( "values", 0 ) +
-        " - $" + $( "#slider-range" ).slider( "values", 1 ) );
-    } );
-  </script>
+    
 
-  <script type="text/javascript">
-    $(document).ready(function(){
-        $('#sort').on('change',function(){
-            var url =$(this).val();
-            if(url){
-                window.location = url;
-            }return false;
-        });
-    });
-  </script>
+    
+
+
+
     {{-- buldle  --}}
-<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.min.js" integrity="sha384-+sLIOodYLS7CIrQpBjl+C7nPvqq+FbNUBDunl/OZv93DB7Ln/533i8e/mZXLi/P+" crossorigin="anonymous"></script>
 </html>

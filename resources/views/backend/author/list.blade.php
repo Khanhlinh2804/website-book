@@ -17,15 +17,15 @@
                     </div>
                 @endif
                 <div class="col-lg-12">
-                <a href="{{ route('author.create') }}" class="btn btn-outline-success"> ADD CATEGORY</a>
-                <p></p>
+                <a href="{{ route('admin.author.create') }}" class="btn btn-outline-success"> ADD CATEGORY</a>
+                <h2>List of author </h2>
                 <table class="table ">
                     <thead>
                         <tr>
                             <th>No.</th>
                             <th>NAME</th>
                             <th>CLASSIFY</th>
-                            <th>PRODUCT</th>
+                            {{-- <th>PRODUCT</th> --}}
                             <th>STATUS</th>
                             <th>CRUD</th>
                         </tr>
@@ -37,7 +37,7 @@
                                 <td>{{ $loop->iteration }}</td>
                                 <td>{{ $item->name }}</td>
                                 <td>{{ $item->classifies->name}}</td>
-                                <td>{{$item->products->count()}}</td>
+                                {{-- <td>{{ $item->products->count()}}</td> --}}
                                 <td>
                                     @if ($item->status)
                                         <span class="badge badge-primary ">Active</span>
@@ -47,12 +47,12 @@
                                 </td>
                                 <td class="d-flex">
                                     
-                                    <a href="{{route('author.edit',$item->id)}}" class="btn btn-outline-success">Edit</a>
-                                    {{-- <form action="{{route('categories.destroy',$item->id)}}" method="post" >
+                                    <a href="{{route('admin.author.edit',$item->id)}}" class="btn btn-outline-success">Edit</a>
+                                    <form action="{{route('admin.author.destroy',$item->id)}}" method="post" >
                                         @csrf
                                         @method('delete')
                                         <button class="btn btn-outline-danger" type="submit">Delete</button>
-                                    </form> --}}
+                                    </form>
                                 </td>
                             </tr>
                         @endforeach

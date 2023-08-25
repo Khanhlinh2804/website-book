@@ -7,7 +7,7 @@
 
     <div class="container-fluid">
         <h4 class="btn ">Update</h4>
-        <form action="{{ route('author.update', $author->id) }}" method="post">
+        <form action="{{ route('admin.author.update', $author->id) }}" method="post">
             @method('PUT')
             @csrf
             <div class="form-group">

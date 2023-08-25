@@ -4,9 +4,18 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Classify extends Model
 {
-    use HasFactory;
-    protected $fillable = ['name', 'status'];
+    use HasFactory, SoftDeletes;
+    
+    protected $fillable = ['name', 'status','image'];
+
+    public function scopeSearch($query) {
+        if($key = request()->key){
+            $query = $query->where('name', 'like', '%'.$key.'%');
+        }
+        return $query;
+    }
 }

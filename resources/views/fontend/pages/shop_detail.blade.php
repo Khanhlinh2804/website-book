@@ -39,25 +39,12 @@
                 <div>
                     <h3>Classify</h3>
                     <div class="dividern"></div>
+                    <a href="{{route('home.shop')}}" class="category-a">All</a>
                     <div>
-                        <a href="{{route('home.shop_classify', ['id'=>$classify->id])}}" class="category-a">{{$classify->name}}</a>
+                        <a href="{{route('home.shop_cate', ['id'=>$classify->id])}}" class="category-a">
+                            {{$classify->name}}</a>
                     </div>
                     <div class="pt-5">
-                    <h3>Category</h3>
-                    <div class="dividern"></div>
-                    
-                </div>
-                <div class="pt-5">
-                    <div>
-                        <h3>Price</h3>
-                        <div class="slider-container">
-                            <input type="range" min="0" max="100" value="0" class="slider" id="price-slider">
-                            <div class="d-flex">
-                                <p class="pr-2">Price:</p>
-                                <span id="min-price">0</span> - <span id="max-price">100</span>
-                            </div>
-                        </div>
-                    </div>  
                 </div>
                 <div class="pt-5">
                     <h4>RECENT PRODUCTS</h4>
@@ -88,6 +75,19 @@
                 </div>
             </div>
             <div class="col-lg-8">
+                <div class="row">
+                    <div class="col-lg-6">
+                        
+                    </div>
+                    <div class="col-lg-6">
+                        <form action="">
+                            <div class="r-1 d-flex"> 
+                                <input class="shop-checkout-input" name="key" placeholder="Search by name..." aria-label="Search">
+                                <button class="shop-search" type="submit"><i class="fa-solid fa-magnifying-glass shop-icon-color"></i></button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
                 <div class="row pt-5 pl-2">
                     @forelse ($product as $item)
                     <div class="col-lg-4">
@@ -105,10 +105,17 @@
                             </div>
                             <div class="pt-3">
                                 <h3 class="text-align-center ">{{$item->name}}</h3>
-                                <p class="text-align-center">Author</p>
-                                <div class="d-flex pr-4">
+                                <p class="text-align-center">{{$item->author->name}}</p>
+                                <div class="d-flex pr-4 text-align-center" >
+                                    @if ($item->sale_price ==0 )
+                                    
+                                    <p class="price-product text-align-center" style="text-align: center" >{{$item->price}}$</p>
+                                    
+                                    @else
                                     <p class="price-product text-align-center" style="text-decoration: line-through; color:black" >{{$item->price}}$</p>
                                     <p class="price-product text-align-center"> - {{$item->sale_price}}$</p>
+                                    @endif
+                                        
 
                                 </div>
 
@@ -127,35 +134,3 @@
 
 
 @endsection
-{{-- @section('product')
-    @forelse ($product as $item)
-                    <div class="col-lg-4">
-                        <div >
-                            <div class="image-container-effect">
-                                <img src="{{url('uploads')}}/{{$item->image}}" alt="Image">
-                                
-                                <a href="">
-                                    <div class="icon-product">
-                                    <div class="heart-overlay ">
-                                        <i class="fa-solid fa-cart-plus" style="color: #b7060f;"></i>
-                                    </div>
-                                </a>
-                                </div>
-                            </div>
-                            <div class="pt-3">
-                                <h3 class="text-align-center ">{{$item->name}}</h3>
-                                <p class="text-align-center">Author</p>
-                                <div class="d-flex pr-4">
-                                    <p class="price-product text-align-center" style="text-decoration: line-through; color:black" >{{$item->price}}$</p>
-                                    <p class="price-product text-align-center"> - {{$item->sale_price}}$</p>
-
-                                </div>
-
-                            </div>
-                        </div>
-                    </div>
-                        
-                    @empty
-                        
-                    @endforelse
-@endsection --}}

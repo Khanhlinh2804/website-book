@@ -5,7 +5,7 @@
     <div id="page-wrapper">
     <div class="container-fluid">
         <h4>EDIT PRODUCT</h4>
-        <form action="{{route('product.update',$pro->id)}}" method="post" enctype="multipart/form-data" role="form">
+        <form action="{{route('admin.product.update',$pro->id)}}" method="post" enctype="multipart/form-data" role="form">
             @csrf
             @method('Put')
             <input type="hidden" name="id" value="{{ $pro->id }}">
@@ -58,12 +58,12 @@
             </div>
             <div class="form-group">
                 <label for="exampleInputEmail1">Description</label>
-                <input type="text" name="description" class="form-control" placeholder="Product's Description" >
+                <input type="text" name="description" class="form-control" value="{{old('description')}} {{$pro->description}}"  placeholder="Product's Description" >
             </div>
             <div class="form-group">
                 <label for="exampleFormControlSelect1">Author</label>
-                <select class="form-control" id="exampleFormControlSelect1" name="category_id">
-                    @foreach ($cat as $item)
+                <select class="form-control" id="exampleFormControlSelect1" name="author_id">
+                    @foreach ($author as $item)
                         <option value="{{ $item->id }}" {{old('author_id') == $item->id ? 'check':''}} >{{$item->id}} - {{ $item->name }}</option>
                     @endforeach
                 </select>

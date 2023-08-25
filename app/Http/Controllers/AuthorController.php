@@ -42,7 +42,7 @@ class AuthorController extends Controller
     {
         
         Author::create($request->all());
-        return redirect()->route('author.index');
+        return redirect()->route('admin.author.index');
     }
 
     /**
@@ -85,7 +85,7 @@ class AuthorController extends Controller
             'name'=>$request->name,
             'status'=>$request->status,
         ]);
-        return redirect()->route('author.index')->with('success','update author successful');
+        return redirect()->route('admin.author.index')->with('success','update author successful');
 
     }
 
@@ -97,7 +97,12 @@ class AuthorController extends Controller
      */
     public function destroy($id)
     {
-        author::find($id)->delete();
-        return redirect()->route('author.index');
+        $auth= author::find($id);
+        try {
+            $auth->delete();
+            return redirect()->route('admin.author.index');
+        } catch (\Throwable $th) {
+            return redirect()->route('no_delete');
+        }
     }
 }

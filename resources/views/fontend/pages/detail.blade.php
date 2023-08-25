@@ -19,8 +19,8 @@
             <div class="col-lg-6 pl-2 pt-5">
                 <div class="">
                     <p class="color-7979 detail-product-name">{{$pro->name}}</p>
-                    {{-- <p class="color-7979 detail-product-author"> Author : <span> {{$pro->author->name}}</span></p> --}}
-                    {{-- <p class="color-7979 detail-product-author"> Classify : <span> {{$pro->classify->name}}</span></p> --}}
+                    <p class="color-7979 detail-product-author"> Author : <span> {{$pro->author->name}}</span></p>
+                    <p class="color-7979 detail-product-author"> Classify : <span> {{$pro->classifies->name}}</span></p>
                     <p class="color-7979 detail-product-author">Số lượng:  {{$pro->quantity}}</p>
                     <p class="color-7979">ID: {{$pro->id}}</p>
                     <p class="color-7979">{{$pro->description}}</p>
@@ -81,7 +81,7 @@
                     </button>
                 </div>
                 <div class="pt-4">
-                    <a href="{{route('cart.add', ['id'=>$product->id])}}">
+                    <a href=" {{route('cart.add', ['id'=>$pro->id])}}">
 
                         <button
                             class=" detail-text-add-to-card p-3 pl-5 pr-5 bold-text white-text black-backgroundS borderless-button">

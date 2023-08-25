@@ -67,6 +67,12 @@
                                             </a>
                                         @endif
                                     </div>
+                                    <div class="">
+                                        @if(Route::has('register'))
+                                            <a class="pl-3 login-a" href="{{ route('register') }}">You don't have an account!
+                                            </a>
+                                        @endif
+                                    </div>
                                 </div>
                             </div>
                         </form>

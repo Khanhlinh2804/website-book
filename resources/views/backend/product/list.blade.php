@@ -3,15 +3,41 @@
     
 @section('content')
 <div id="page-wrapper">
+    <div class="row">
         <div style="display: inline;">
+            <?php $user = Auth::user(); ?>
             <p></p>
             <form class="form-inline my-2 my-lg-0" action="">
-                <a href="{{ route('product.create') }}" class="btn btn-outline-primary">ADD PRODUCT</a>
                 
-                <input class="form-control mr-sm-2" name="key" placeholder="Search by name..." aria-label="Search">
-                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                <div class="col-lg-7">
+                @if ($user->can('admin.product.create') && $user->can('admin.product.store'))
+                    <a href="{{ route('admin.product.create') }}" class="btn btn-outline-primary">ADD PRODUCT</a>
+                @endif
+                <a href="{{route('admin.product.trashed')}}" class="btn btn-outline-success">TRASH</a>
+                </div>
+                <div class="col-lg-5 right">
+                    <input class="form-control mr-sm-2" style="width: 80%;" name="key" placeholder="Search by name..." aria-label="Search">
+                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+
+                </div>
             </form>
         </div>
+    </div>
+    <div class="row">
+        @if (session('success'))
+            <div class="alert alert-info alert-dismissible fade show" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    <span class="sr-only">Close</span>
+                </button>
+                <strong style="color:brown">
+                    {{ session('success') }}
+                </strong>
+            </div>
+        @endif
+        
+    </div>
+        <h2>List of product</h2>
         <hr> 
 
         <table class="table">
@@ -49,25 +75,33 @@
                             <img src="{{url('uploads')}}/{{$item->image}}" class="w-20" alt="">
                         </td>
                         <td>
-                            {{-- {{$item->authors->name}} --}}
+                            {{$item->author->name}}
                         </td>
-                        <td>{{$item->classifies->name}}</td>
+                        {{-- <td>{{$item->classifies->name}}</td> --}}
                         <td>{{$item->description}}</td>
                         <td>
                             @if ($item->status)
-                                <span class="badge badge-primary">stocking</span>
+                                <span >stocking</span>
                                 @else
-                                <span class="badge badge-danger">out of stock</span>
+                                <span >out of stock</span>
                                 
                             @endif
                         </td>
                         <td class="">
-                            <form action="{{route('product.destroy',$item->id)}}" method="post">
-                                <a href="{{route('product.edit',$item->id)}}" class="btn btn-outline-success">EDIT</a>
+                            
+                            @if ($user->can('admin.product.edit'))
+                            <a href="{{route('admin.product.edit',$item->id)}}" class="btn btn-outline-success">EDIT</a>
+                            @endif
+                            @if ($user->can('admin.product.destroy'))  
+                            <form action="{{route('admin.product.destroy',$item->id)}}" method="post">
                                 @csrf
                                 @method('DELETE')
-                                <button type="submit" class="btn btn-outline-danger">DELETE</button>
+                                <button type="submit" style="background-color: white; border: none;">DELETE</button>
                             </form>
+                            @endif
+                            {{-- <a href="{{route('admin.product.trashed')}}" class="btn btn-outline-success">TRASH</a> --}}
+                            
+                            
                         </td>
                     </tr>
                 @endforeach

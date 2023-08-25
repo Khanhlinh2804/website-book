@@ -4,26 +4,22 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-
+use Illuminate\Database\Eloquent\SoftDeletes;
 class Product extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes ;
     protected $fillable = [	'name'	,'price',	'sale_price'	,'status'	,'description'	,'image'	,'author_id', 'quantity','classify_id' ];
     
-    public function authours()
+    public function author()
     {
-        return $this->hasOne(Author::class, 'id', 'authour_id');
+        return $this->hasOne(Author::class, 'id', 'author_id');
     }
-    //khóa ngoại
+    
     public function classifies()
     {
         return $this->hasOne(Classify::class, 'id', 'classify_id');
     }
 
-    // join 1- n
-    public function cat() {
-        return $this->hasOne(Author::class, 'id', 'author_id');
-    } 
     // them localScope
     public function scopeSearch($query) {
         if($key = request()->key){
@@ -32,10 +28,14 @@ class Product extends Model
         return $query;
     }
 
-    // loc 
-    public function author()
+    public function scopeFilter($query)
     {
-        return $this->belongsTo(Author::class, 'author_id', 'author_id');
+        if (request()->order) {
+            $order = request()->order;
+            $order_arr = explode('-', $order);
+            $query = $query->orderBy($order_arr[0], $order_arr[1]);
+        }
+        return $query;
     }
 }
 

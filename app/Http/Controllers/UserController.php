@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use 
 use Illuminate\Http\Request;
 
 class UserController extends Controller
@@ -11,10 +11,18 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    
+    
     public function profile()
     {
         return view('fontend.pages.profile');
     }
+    public function history()
+    {
+        return view('fontend.pages.order_history');
+    }
+
+
     public function index()
     {
         
@@ -36,9 +44,18 @@ class UserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+   public function store(UserRegisterRequest $req)
     {
-        //
+        $password = Hash::make($req->password);
+        User::create([
+            "name" => $req->name,
+            "email" => $req->email,
+            "address" => $req->address,
+            "phone" => $req->phone,
+            "password" => $password,
+        ]);
+
+        // return redirect()->route('user.sign-in')->with('alert', 'Sign Up Successfully !');
     }
 
     /**

@@ -1,15 +1,16 @@
-.cart-button-update{
+.cart-button-update {
     background-color: white;
     color: rgb(82, 81, 81);
-    border: 1px solid black ;
+    border: 1px solid black;
     padding-left: 50px;
     padding-right: 50px;
 }
-.cart-input-quatity{
+
+.cart-input-quatity {
     height: 30px;
     width: 35px;
     border: none;
     outline: none;
-    
+
 }
 

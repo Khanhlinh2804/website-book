@@ -5,7 +5,7 @@
     <div id="page-wrapper">
     <div class="container-fluid">
         <h4>EDIT CLASSIFY</h4>
-        <form action="{{route('classify.update',$classify->id)}}" method="post" >
+        <form action="{{route('admin.classify.update',$classify->id)}}" enctype="multipart/form-data" method="post" role="form">
             @csrf
             @method('Put')
             <input type="hidden" name="id" value="{{ $classify->id }}">
@@ -16,6 +16,21 @@
                     @error('name')
                         <p class="text-danger">{{ $message }}</p>
                     @enderror
+            </div>
+            <style>
+                .w-25{
+                    width: 120px;
+                    height: 150px;
+                } 
+            </style>
+            <div class="form-group">
+                <label for="exampleInputEmail1">Image</label>
+                <input type="file" name="image" id="image" value="{{old('image') ?? $classify->image}}" class="form-control" >
+                    <img src="/uploads/{{$classify->image}}" alt="" class="w-25">
+                </span> 
+                @error('image')
+                    <p class="text-danger">{{ $message }}</p>
+                @enderror
             </div>
             <p>Status</p>
             <div class="form-check">

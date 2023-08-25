@@ -15,7 +15,7 @@
                     class="d-block w-100 height-400" alt="...">
                 <div class="carousel-caption d-none d-md-block">
                     <p class="font-size40 mg-20">Finds Books For</p>
-                    <p class="font-size40">All Ages!</p>
+                    <p class="font-size40 ">All Ages!</p>
                     <button class="m-5 p-3 pl-5 pr-5 bold-text white-text black-background borderless-button">DISCOVER
                         YOUR NEXT BOOK</button>
                 </div>
@@ -71,18 +71,6 @@
                         <a href="{{route('home.detail',['id'=>$item->id])}}" class="bold-text a-text-decoration">
                             <p class="text-center ">Name: {{ $item->name }}</p>
                         </a>
-                        {{-- <div class="rating pl-5">
-                            <input type="radio" id="star5" name="rating" value="5">
-                            <label for="star5"></label>
-                            <input type="radio" id="star4" name="rating" value="4">
-                            <label for="star4"></label>
-                            <input type="radio" id="star3" name="rating" value="3">
-                            <label for="star3"></label>
-                            <input type="radio" id="star2" name="rating" value="2">
-                            <label for="star2"></label>
-                            <input type="radio" id="star1" name="rating" value="1">
-                            <label for="star1"></label>
-                        </div> --}}
                         <h5 class="card-title color-red text-center">{{$item->price}} $</h5>
                     </div>
                 </div>
@@ -125,16 +113,17 @@
         <div class="divider center pr-5"></div>
             <form action="" method="get">
                 <div class="d-flex">
-
+                    @foreach ($clas as $item)    
                     <div class="col-lg-3 pt-3 ">
                         <div class="zoom-container ">
                             <img class="zoom-image "
-                                src="https://i.pinimg.com/564x/03/03/fb/0303fb670352f70fb16c332836ec7180.jpg" alt="Ảnh">
+                            src="{{url('uploads')}}/{{$item->image}}" alt="Ảnh">
                             <div class="text-overlay">
-                                <a href="" class="white-text text-decoration">hihi</a>
+                                <a href="" class="white-text text-decoration">{{$item->name}}</a>
                             </div>
                         </div>
                     </div>
+                    @endforeach
 
                 </div>
             </form>
@@ -238,7 +227,7 @@
             @endif
 
 
-            <a href="{{route('home.detail',['id'=>$item->id])}}">
+            <a href="{{route('home.shop')}}">
                 <button
                   class="mb-5 mt-4 p-3 pl-4 pr-4 bold-text white-text black-backgroundS borderless-button">
                   VIEW SHOP
@@ -266,7 +255,12 @@
                 </div>
                 <div class="random-products">
                     <a href="" class="a-text-decoration">{{$item->name}}</a>
+                    @if ($item->sale_price == 0)
+                        <p class="red-text">{{$item->price}} $</p>
+                    @else
                     <p class="red-text">{{$item->sale_price}} $</p>
+                        
+                    @endif
                 </div>   
             </div>
         </div>

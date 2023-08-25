@@ -26,6 +26,7 @@ return new class extends Migration
             $table->foreign('classify_id')->references('id')->on('classifies');
             $table->bigInteger('author_id')->unsigned();
             $table->foreign('author_id')->references('id')->on('authors');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

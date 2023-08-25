@@ -4,7 +4,7 @@
     <div id="page-wrapper">
     <div class="container-fluid">
         <h4>ADD PRODUCT</h4>
-        <form action="{{route('product.store')}}" method="post" enctype="multipart/form-data" role="form">
+        <form action="{{route('admin.product.store')}}" method="post" enctype="multipart/form-data" role="form">
             @csrf
             <div class="form-group">
                 <label for="exampleInputEmail1">Name</label>
@@ -30,7 +30,7 @@
                     <p class="text-danger">{{ $message }}</p>
                     @enderror
             </div>
-            <div class="form-group">
+            <div class="form-group"> 
                 <label for="exampleInputEmail1">Quantity</label>
                 <input type="number" name="quantity" class="form-control" placeholder="Product's quantity" 
                 value="{{old('quantity')}}">

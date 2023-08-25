@@ -1,12 +1,13 @@
 .height-400 {
     height: 600px;
 }
-
-;
-
 .footer {
-    background-color: #121010;
+    background-color: #ffffff;
     color: aliceblue;
+}
+
+.text-fooler{
+    color: #000;
 }
 
 .none {
@@ -14,11 +15,9 @@
     font-size: 20px;
 }
 
-;
-
 .p-footer {
     color: red;
-    font-size: 40px;
+    font-size: 25px;
 }
 
 .red {
@@ -76,6 +75,7 @@
     background-color: black;
     color: white;
 }
+
 
 .black-icon {
     background-color: black;
@@ -573,10 +573,15 @@
     text-align: center;
     /* padding-bottom: -50px;  */
 }
-
+.about-center{
+    text-align: center;
+}
 .about-text-our-p {
     font-size: 20px;
     text-align: center;
+    font-style: italic;
+}
+.about-p-big{
     font-style: italic;
 }
 .about-text-decoration{
@@ -586,7 +591,6 @@
 .about-text-decoration:hover{
     text-decoration: none;
 }
-
 .detail-image {
     height: 750px;
     width: 95%;
@@ -821,6 +825,19 @@
     outline: none;
     padding: 14px;
     width: 100%;
+}
+.shop-checkout-input {
+    border: none;
+    outline: none;
+    padding: 10px;
+    width: 100%;
+}
+.shop-search{
+    border: 1px solid #000000;
+    border-radius: none;
+    padding: 10px;
+    /* outline: invert; */
+    background-color: white;
 }
 
 .background-white {

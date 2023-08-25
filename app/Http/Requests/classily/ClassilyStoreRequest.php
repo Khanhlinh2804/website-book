@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class ClassilyRequest extends FormRequest
+class ClassilyStoreRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,14 +24,18 @@ class ClassilyRequest extends FormRequest
     public function rules()
     {
         return [
-            'name'=>'bail|required|max:50|min:3'
+            'name'=>'bail|required|max:50|min:3',
+            'image'=>'bail|required'
         ];
     }
     public function messages(){
         return[
-            'name.required'=>'Classify name cannot empty',
-            'name.min' => 'Category name must be at least 3 characters',
-            'name.max' => 'Category name cannot exceed 50 characters'
-        ]
+            'name.required' => 'Name classify not empty',
+            'name.max' => 'Name classify cannot be longer than 50 characters',
+            'name.min' => 'Name classify cannot be short than 3 characters',
+            'image.required' => 'Image not empty'
+        ];
     }
+
+    
 }

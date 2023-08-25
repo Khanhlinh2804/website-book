@@ -6,10 +6,11 @@ use App\Models\Product;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Author extends Model
 {
-    use HasFactory;
+    use HasFactory,SoftDeletes;
     protected $fillable = ['name', 'status','description','classify_id'];
     
     public function classifies()
@@ -17,13 +18,8 @@ class Author extends Model
         return $this->hasOne(Classify::class, 'id', 'classify_id');
     }
 
-    // public function products(){
-    //     return $this->hasMany(Product::class, 'author_id', 'id');
-    // }
-
-
-    public function product()
+    public function products()
     {
-        return $this->hasMany(Model::class, 'author_id', 'author_id');
+        return $this->hasMany(Product::class, 'author_id', 'author_id');
     }
 }

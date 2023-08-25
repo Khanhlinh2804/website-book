@@ -39,46 +39,31 @@
                 <div>
                     <h3>Classify</h3>
                     <div class="dividern"></div>
+                    <a href="{{route('home.shop')}}" class="category-a">All</a>
                     @forelse ($classify as $item)
                     <div>
-                        
-                        <a href="{{route('home.shop_classify', ['id'=>$item->id])}}" class="category-a">{{$item->name}}</a>
+                        <a href="{{route('home.shop_cate', ['id'=>$item->id])}}"
+                             class="category-a" {{ request()->route('id') == $item->id ? 'active' : '' }}>
+                             {{$item->name}}</a>
                     </div>   
                     @empty
-                         <p>Không có dữ liệu phân loại.</p>
+                         <p>No classify.</p>
                     @endforelse
                 </div>
                 <div class="pt-5">
-                    <h3>Category</h3>
+                    <h3>Author</h3>
                     <div class="dividern"></div>
                     @forelse ($author as $item)
                     <div>
-                        <a href="" class="category-a">{{$item->name}}</a>
+                        <a href="{{route('home.shop_author',['id'=>$item->id])}}" class="category-a"
+                            >{{$item->name}}</a>
                     </div>
                         
                     @empty
-                        
+                    No author
                     @endforelse
                 </div>
-                <div class="pt-5">
-                    <div>
-                        <h3>Price</h3>
-                        <div class="slider-container">
-                            <input type="range" min="0" max="100" value="0" class="slider" id="price-slider">
-                            <div class="d-flex">
-                                <p class="pr-2">Price:</p>
-                                <span id="min-price">0</span> - <span id="max-price">100</span>
-                            </div>
-                        </div>
-                        {{-- <form >
-                            <div id="slider-range">
-                            </div>
-                            <input type="text" id="amount" readonly style="border:0; color:#f6931f; font-weight:bold;">
-                            <br>
-                            <input type="submit" name="filter_price" value="filter-price" class="btn btn" >
-                        </form> --}}
-                    </div>  
-                </div>
+                
                 <div class="pt-5">
                     <h4>RECENT PRODUCTS</h4>
                     <div class="dividern"></div>
@@ -90,8 +75,12 @@
                                 <div>
                                     <p class="name-product-master color-text-black">{{$item->name}}</p>
                                     <div class="d-flex">
+                                        @if ($item->sale_price==0)
+                                        <p class="name-product-master color-text-red">{{$item->price}} $</p>
+                                        @else 
                                         <p class="name-product-master" style="text-decoration: line-through;">{{$item->price}} $</p>
                                         <p class="name-product-master color-text-red">{{$item->sale_price}} $</p>
+                                        @endif
 
                                     </div>
                                 </div>
@@ -114,45 +103,12 @@
                         </div>
                     </div>
                     <div class="col-lg-6">
-                        <div class="r-1">
-                            {{-- lọc javasript  --}}
-                            <script>
-                                const filterSelect = document.getElementById('filter-select');
-        
-                                filterSelect.addEventListener('change', function() {
-                                const selectedValue = filterSelect.value; 
-                                
-                                if (selectedValue === 'price') {
-        
-                                } else if (selectedValue === 'name') {
-        
-                                }
-                                });
-        
-                            </script>
-                            <div class="filter-container ">
-                                {{-- <form action="" class="" style="width: 500px;">
-                                    <select id="sort" name="sort" class="filter-select ">
-                                        <option value="name-ASC">filter</option>
-                                        <option value="name-ASC">Name (a - z)</option>
-                                        <option value="name-DESC">Name (z - a)</option>
-                                        <option value="price-ASC">Price (low - high)</option>
-                                        <option value="price-DESC">Price (hight - low)</option>
-                                    </select>
-
-                                </form> --}}
-                                <form class="" style="width: 500px;">
-                                    @csrf
-                                <select name="sort" id="sort" class="filter-select">
-                                    <option>Hiện thị theo</option>
-                                    <option value="{{Request::url()}}?sort_by=name-ASC">Name (a - zn)</option>
-                                    <option value="{{Request::url()}}?sort_by=name-DESC">Name (z - a)</option>
-                                    <option value="{{Request::url()}}?sort_by=price-ASC">Price (low - high)</option>
-                                    <option value="{{Request::url()}}?sort_by=price-DESC">Price (hight - low)</option>
-                                </select>
-                                </form>
+                        <form action="">
+                            <div class="r-1 d-flex"> 
+                                <input class="shop-checkout-input" name="key" placeholder="Search by name..." aria-label="Search">
+                                <button class="shop-search" type="submit"><i class="fa-solid fa-magnifying-glass shop-icon-color"></i></button>
                             </div>
-                        </div>
+                        </form>
                     </div>
                 </div>
                 <div class="row pt-5 pl-2">
@@ -175,12 +131,19 @@
                                 </a>
                                 </div>
                             </div>
-                            <div class="pt-3">
+                            <div class="pt-3 text-align-center">
                                 <h3 class="text-align-center ">{{$product->name}}</h3>
-                                <p class="text-align-center">Author</p>
-                                <div class="d-flex pr-4">
+                                <p class="text-align-center">{{$product->author->name}}</p>
+                                <div class="d-flex pr-4 text-align-center" >
+                                    @if ($product->sale_price ==0 )
+                                    
+                                    <p class="price-product text-align-center" style="text-align: center" >{{$product->price}}$</p>
+                                    
+                                    @else
                                     <p class="price-product text-align-center" style="text-decoration: line-through; color:black" >{{$product->price}}$</p>
                                     <p class="price-product text-align-center"> - {{$product->sale_price}}$</p>
+                                    @endif
+                                        
 
                                 </div>
 
@@ -190,8 +153,8 @@
                     @empty
                     <p>Không có dữ liệu gì đâu nên bạn phải thêm vào đi nha </p> 
                     @endforelse
+                    {{ $allproduct->links() }}
                 </div>
-                {{ $allproduct->links() }}
             </div>
         </div>
     </div>

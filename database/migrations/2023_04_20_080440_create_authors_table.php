@@ -19,8 +19,9 @@ return new class extends Migration
             $table->bigInteger('status')->default(1);
             $table->text('description')->nullable();
             $table->bigInteger('classify_id')->unsigned();
-            $table->foreign('classify_id')->references('id')->on('classifies');
+            // $table->foreign('classify_id')->references('id')->on('classifies');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

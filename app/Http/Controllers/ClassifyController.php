@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Http\classily\ClassilyRequest;
+use App\Http\Requests\classily\ClassilyStoreRequest;
 use App\Models\Classify;
 
 class ClassifyController extends Controller
@@ -15,11 +15,37 @@ class ClassifyController extends Controller
      */
     public function index()
     {
-        $cation = Classify::orderByDesc('id','desc')->paginate(5)->withQueryString();
-        // dd($cation);
-        return view('backend.classify.list', compact('cation'));
+        $classify = Classify::orderByDesc('id','desc')->paginate(5);
+        // dd($classify);
+        return view('backend.classify.list', compact('classify'));
     }
 
+    public function trashed(){
+        $classify = Classify::onlyTrashed()->orderByDesc('id','desc')->search()->paginate(5);
+        return view('backend.classify.trash', compact('classify'));
+    }
+
+
+    public function restore($id){
+        $classify = Classify::withTrashed()->find($id);
+
+        if ($classify) {
+            $classify->restore();
+            return redirect()->route('admin.classify.index')->with('success', 'Classify restored successfully.');
+        } else {
+            return redirect()->route('admin.classify.index')->with('error', 'Classify not found.');
+        }
+    }
+    public function deleteforce($id){
+        $classify = Classify::withTrashed()->find($id);
+
+        if ($classify) {
+            $classify->forceDelete();
+            return redirect()->route('admin.classify.index')->with('success', 'Classify restored successfully.');
+        } else {
+            return redirect()->route('no_delete')->with('error', 'Classify not found.');
+        }
+    }
     /**
      * Show the form for creating a new resource.
      *
@@ -37,15 +63,39 @@ class ClassifyController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
-        // dd($request);
-        $form_data = $request->all('name','status');
-        try {
-            Classify::create($form_data);
-            return redirect()->route('classify.index')->with('success','Insert Classify Successfully');
-        } catch (\Throwable $th) {
-            return redirect()->route('classify.index')->with('success','Insert Classify Unsuccessfully');
-        }
+    { 
+        // c1 
+        // if($request->has('image')){
+        //     $file = $request->image;
+        //     $file_name = $file->getClientOriginalName();
+        //     $file->move(public_path('uploads'),$file_name);
+    
+        // }
+        // // dd($request->all());
+        $rules = [
+            'name'=>'required|max:50|min:3',
+            'image' =>'required',
+        ];
+        $messages = [
+            'name.required' => 'Name classify not empty',
+            'name.max' => 'Name classify cannot be longer than 50 characters',
+            'name.min' => 'Name classify cannot be short than 3 characters',
+            'image.required' => 'Image not empty'
+        ];
+
+        
+        $request->validate($rules,$messages);
+        // c2 
+        $file_name = time() . $request->image->getClientOriginalName();
+        $request->image->move(public_path('uploads'),$file_name);
+
+            Classify::create([
+                'name'=> $request->name,
+                'image'=> $file_name,
+                'status'=> $request->status
+            ]);
+        return redirect()->route('admin.classify.index')->with('success','Insert Classify Successfully');
+        
     }
 
     /**
@@ -54,10 +104,10 @@ class ClassifyController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
-    {
-        //
-    }
+    // public function show($id)
+    // {
+    //     //
+    // }
 
     /**
      * Show the form for editing the specified resource.
@@ -70,7 +120,7 @@ class ClassifyController extends Controller
         $classify = Classify::find($id);
         return view('backend.classify.edit', compact('classify'));
     }
-
+    
     /**
      * Update the specified resource in storage.
      *
@@ -78,15 +128,32 @@ class ClassifyController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(ClassilyRequest $request, Classify $cation)
+    public function update(Request $request, $id)
     {
-        $form_data = $request->all('name', 'status');
-        $request->validated();
-        $cation->update([
-            'name'=>$request->name,
-            'status'=>$request->status
+        $classify = Classify::find($id);
+        $rules = [
+            'name'=>'required|max:50|min:3',
+            'image' =>'required'
+        ];
+        $messages = [
+            'name.required' => 'Name classify not empty',
+            'name.max' => 'Name classify cannot be longer than 50 characters',
+            'name.min' => 'Name classify cannot be short than 3 characters',
+            'image.required' => 'Image not empty'
+        ];
+        $request->validate($rules,$messages);
+        // dd($classify);
+        $file_name = $classify->image;
+        if($request->has('image')){
+            $file_name = time() . $request->image->getClientOriginalName();
+            $request->image->move(public_path('uploads'), $file_name); 
+        }
+        $classify->update([
+            'name' => $request->name,
+            'status' => $request->status,
+            'image' => $file_name
         ]);
-        return redirect()->route('classify.index')->with('success','Update Classify Successfully');
+        return redirect()->route('admin.classify.index')->with('success','Update Classify Successfully');
     }
 
     /**
@@ -97,7 +164,14 @@ class ClassifyController extends Controller
      */
     public function destroy($id)
     {
-        Classify::find($id)->delete();
-        return redirect()->route('classify.index')->with('success','Delete Product Successfully');
+        $classify= Classify::find($id);
+        
+        try {
+            $classify->delete();
+            return redirect()->route('admin.classify.index')->with('success', 'Delete Product Successfully');
+        } catch (\Throwable $th) {
+            return redirect()->route('no_delete');
+        }
+        
     }
 }
