@@ -29,7 +29,7 @@
         <div class="row">
             <h1 class="text-center pt-5 pb-3 ">Related Blogs</h1>
             <div class="divide center pr-5"></div>
-            
+             
             
         </div>
     </div>
