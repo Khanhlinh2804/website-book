@@ -15,7 +15,7 @@ class Product extends Model
         return $this->hasOne(Author::class, 'id', 'author_id');
     }
     
-    public function classifies()
+    public function dataClassify()
     {
         return $this->hasOne(Classify::class, 'id', 'classify_id');
     }

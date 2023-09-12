@@ -50,7 +50,7 @@
                     <th>Quantity</th>
                     <th>Image</th>
                     <th>Author</th>
-                    <th>Classify</th>
+                    {{-- <th>Classify</th> --}}
                     <th>Description</th>
                     <th>Status</th>
                     <th>Action</th>
@@ -77,7 +77,7 @@
                         <td>
                             {{$item->author->name}}
                         </td>
-                        {{-- <td>{{$item->classifies->name}}</td> --}}
+                        {{-- <td>{{$item->dataClassify->name}}</td> --}}
                         <td>{{$item->description}}</td>
                         <td>
                             @if ($item->status)

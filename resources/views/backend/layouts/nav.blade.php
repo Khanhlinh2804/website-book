@@ -98,11 +98,11 @@
                 </li> --}}
                 
                 <li>
-                    <a href="">
+                    <a href="{{ route('logon') }}">
+                        {{-- <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none"> --}}
                         <i class="fa fa-fw fa-power-off"></i>Log Out
-                        <form id="logout-form" action="{{ route('admin.logon') }}" method="POST" class="d-none">
-                            @csrf
-                        </form>
+                            {{-- @csrf --}}
+                        {{-- </form> --}}
                     </a>
                     
                 </li>

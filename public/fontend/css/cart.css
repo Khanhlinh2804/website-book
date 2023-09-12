@@ -13,4 +13,11 @@
     outline: none;
 
 }
+.cart-coupon{
+    color: black;
+}
+.cart-coupon:hover{
+    color: black;
+    text-decoration:none;
+}
 

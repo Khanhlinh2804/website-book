@@ -94,12 +94,16 @@
                             <div class="pt-4">
                                 <label class="checkout-first-name" for="district">District<span style="color: red; font-weight: bold;">*</span></label>
                             </div>
+                            {{-- <select id="district" name="district">
+                                <option value="">--Select the district--</option>
+                            </select> --}}
                             <select class="checkout-input" id="districts" name="districts">
                                 <option value="">--Select the district--</option> 
                                 @foreach ($districts as $item)
                                     <option value="{{ $item->id }}" {{ old('districts') == $item->id ? 'selected' : '' }}>{{ $item->name }}</option>
                                 @endforeach
                             </select>
+
                         </div>
 
                         <div>

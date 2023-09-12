@@ -28,8 +28,7 @@ class AdminController extends Controller
     }
 
     public function post_admin()
-    {
-        
+    {    
             $login = request()->only(['email', 'password']);
             $token = auth()->attempt($login);
             if ($token) {
@@ -37,21 +36,26 @@ class AdminController extends Controller
             // }
             } else {
             return redirect('/admin');
-        };
+            };
     }
+
     public function no_delete(){
         return view('backend.pages.foreign_key');
     }
+
     public function error(){
         $code = request()->code;
-
         $error = config('error.'.$code);
         return view('backend.error', $error);
     }
 
     public function logon(){
-        User::logout();
-        return redirect()->route('admin');
+        $logout = Auth::logout();
+        if($logout){
+            return redirect()->route('admin.admin')->with('success', 'logout success');
+        }else{
+            return redirect()->back();
+        }
     }
     
 

@@ -11,31 +11,36 @@ class CartController extends Controller
 {
     public function add(CartHelper $cart,$id){
         $product = Product::find($id);
+        // dd($cart);
         $cart->add($product);
-        // dd(session('cart'));
         return redirect()->back();
     
     }
     public function remove(CartHelper $cart,$id){
+        
         $cart->remove($id);
+
         return redirect()->back();
     
     }
-    public function clear(CartHelpe $cart){
-        $cart->remuve($id);
+    public function clear(CartHelper $cart){
+        $cart->clear();
         return redirect()->back();
     
     }
-    public function update(CartHelper $cart,$id){
+    public function update(Request $request, CartHelper $cart, $id){
         $quantity = request()->quantity ? request()->quantity : 1;
         $product = Product::find($id);
-        $cart->add($product, $quantity);
+        $cart->update($id,$quantity);
         return redirect()->back();
-    
     }
-    public function show()
+    
+
+    public function show(CartHelper $cart)
     {
-        return view('fontend.cart.cart');
+        $carts_view = $cart->getCart();
+        $totalPrice = $cart->totalPrice();
+        return view('fontend.cart.cart', compact('carts_view'));
     }
     
     

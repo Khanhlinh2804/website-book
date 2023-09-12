@@ -34,7 +34,7 @@
     </div>
     <div class="pt-5"></div>
     <div class="container">
-        <div class="row">
+        <div class="row pb-2">
             <div class="col-lg-4 white pt-4 ">
                 <div>
                     <h3>Classify</h3>

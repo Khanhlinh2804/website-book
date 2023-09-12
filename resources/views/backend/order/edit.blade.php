@@ -28,22 +28,22 @@
             <select class="form-control" id="exampleFormControlSelect1" name="status">
                 <option value="1" @if ($orders->status == 1)
                     @endif
-                >Đang chờ xác nhận</option>
+                >Waiting for confirmation</option>
                 <option value="2" @if ($orders->status == 2)
                     @endif
-                    >Đã xác nhận đơn hàng</option>
+                    >Order confirmed</option>
                 <option value="3" @if ($orders->status == 3)
                     @endif
-                    >Đã đóng gói và gửi đến đơn vị vận chuyển</option>
+                    >Packaged and sent to the shipping carrier</option>
                 <option value="4" @if ($orders->status == 4)
                     @endif
-                    >Đang giao hàng</option>
+                    >Order in transit</option>
                 <option value="5" @if ($orders->status == 5)
                     @endif
-                    >Giao hàng thành công</option>
+                    >Delivery successful</option>
                 <option value="6" @if ($orders->status == 6)
                     @endif
-                    >Giao hàng thất bại</option>
+                    >Delivery failed</option>
             </select>
         </div>
         <div>

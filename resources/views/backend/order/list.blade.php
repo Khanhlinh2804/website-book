@@ -51,18 +51,19 @@
                         <td>{{$item->note}}</td>
                         <td>
                             @if ($item->status == 1)
-                                <span style="color: green">Đang chờ xác nhận</span>
-                                @elseif($item->status == 2)
-                                <span  style="color: rgb(151, 196, 4)">Đã xác nhận đơn hàng</span>
-                                @elseif($item->status == 3)
-                                <span  style="color: rgb(9, 242, 226)">Đã đóng gói và gửi đến đơn vị vận chuyển</span>
-                                @elseif($item->status == 4)
-                                <span  style="color: rgb(9, 32, 242)">Đơn hàng đang giao</span>
-                                @elseif($item->status == 5)
-                                <span  style="color: rgb(143, 8, 8)">Giao hàng thành công</span>
-                                @else
-                                <span  style="color: rgb(0, 0, 0)" >Giao hàng thất bại</span>
+                                <span style="color: green">Waiting for confirmation</span>
+                            @elseif($item->status == 2)
+                                <span style="color: rgb(151, 196, 4)">Order confirmed</span>
+                            @elseif($item->status == 3)
+                                <span style="color: rgb(9, 242, 226)">Packaged and sent to the shipping carrier</span>
+                            @elseif($item->status == 4)
+                                <span style="color: rgb(9, 32, 242)">Order in transit</span>
+                            @elseif($item->status == 5)
+                                <span style="color: rgb(143, 8, 8)">Delivery successful</span>
+                            @else
+                                <span style="color: rgb(0, 0, 0)">Delivery failed</span>
                             @endif
+
                         </td>
                         <td class="">
                             

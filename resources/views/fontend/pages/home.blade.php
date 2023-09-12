@@ -20,28 +20,23 @@
                         YOUR NEXT BOOK</button>
                 </div>
             </div>
-            <div class="carousel-item">
-                <img src="https://i.pinimg.com/564x/0f/b3/9d/0fb39d335bbdef3a8a661ee42ca703e9.jpg"
-                    class="d-block w-100 height-400" alt="...">
+            @foreach ($banners as $item)
+                
+            <div class="carousel-item ">
+                <img src="{{url('uploads')}}/{{$item->image}}"
+                class="d-block w-100 height-400" alt="...">
                 <div class="carousel-caption d-none d-md-block">
                     <p>Choose Your Book!</p>
-                    <p class="font-size40 mg-20">Books That </p>
+                    <p class="font-size40 mg-20" style="color: rgb(126, 62, 62)">{{$item->name}} </p>
                     <p class="font-size40">All Ages!</p>
-                    <button class="m-5 p-3 pl-5 pr-5 bold-text white-text black-background borderless-button">DISCOVER
-                        YOUR NEXT BOOK</button>
+                   
+                    <a href="{{$item->link}}"  class="m-5 p-3 pl-5 pr-5 bold-text white-text black-background borderless-button">DISCOVER
+                        YOUR NEXT BOOK
+                    </a>
                 </div>
             </div>
-            <div class="carousel-item">
-                <img src="https://i.pinimg.com/564x/03/03/fb/0303fb670352f70fb16c332836ec7180.jpg"
-                    class="d-block w-100 height-400" alt="...">
-                <div class="carousel-caption d-none d-md-block">
-                    <p class="font-size40 mg-20">Finds Books For</p>
-                    <p class="font-size40">All Ages!</p>
-                    <button class="m-5  p-3 pl-5 pr-5 bold-text white-text black-background borderless-button">DISCOVER
-                        YOUR NEXT BOOK</button>
-
-                </div>
-            </div>
+            @endforeach
+                
         </div>
         <button class="carousel-control-prev" type="button" data-target="#carouselExampleCaptions" data-slide="prev">
             <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -69,7 +64,7 @@
                     </a>
                     <div class="card-body">
                         <a href="{{route('home.detail',['id'=>$item->id])}}" class="bold-text a-text-decoration">
-                            <p class="text-center ">Name: {{ $item->name }}</p>
+                            <p class="text-center "> {{ $item->name }}</p>
                         </a>
                         <h5 class="card-title color-red text-center">{{$item->price}} $</h5>
                     </div>
@@ -119,7 +114,7 @@
                             <img class="zoom-image "
                             src="{{url('uploads')}}/{{$item->image}}" alt="Ảnh">
                             <div class="text-overlay">
-                                <a href="" class="white-text text-decoration">{{$item->name}}</a>
+                                <a href="{{route('home.shop')}}" class="white-text text-decoration">{{$item->name}}</a>
                             </div>
                         </div>
                     </div>
@@ -131,8 +126,9 @@
     {{-- </div> --}}
 </div>
     <div class="button-center pb-5">
-        <button class="mb-5 mt-3 p-3 pl-5  pr-5 bold-text pl-50 white-text black-backgroundS borderless-button">DISCOVER
-            MORE BOOK</button>
+        
+        <a href="{{route('home.shop')}}" class="mb-5 mt-3 p-3 pl-5  pr-5 bold-text pl-50 white-text black-backgroundS borderless-button">DISCOVER
+            MORE BOOK</a>
     </div>
 </div>
 <div class="pt-5">

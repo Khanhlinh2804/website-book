@@ -20,7 +20,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-        Product::with('authors','classifies');
+        Product::with('authors','dataClassify');
         // cach 1: search 
         // $products = Product::orderByDesc('id','desc')->paginate(10);
         // dd(request()->key);

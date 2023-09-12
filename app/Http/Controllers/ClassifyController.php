@@ -147,7 +147,7 @@ class ClassifyController extends Controller
         if($request->has('image')){
             $file_name = time() . $request->image->getClientOriginalName();
             $request->image->move(public_path('uploads'), $file_name); 
-        }
+        } 
         $classify->update([
             'name' => $request->name,
             'status' => $request->status,

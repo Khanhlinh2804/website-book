@@ -25,6 +25,7 @@ class RoleController extends Controller
      */
     public function create()
     {
+
         $routes = [];
         $all = Route::getRoutes();
 

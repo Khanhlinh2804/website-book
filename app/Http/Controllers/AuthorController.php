@@ -16,11 +16,37 @@ class AuthorController extends Controller
      */
     public function index()
     {
-        $author= Author::orderByDesc('id','desc')->paginate(10);
+        $author= Author::with('products')->orderByDesc('id','desc')->paginate(10);
         // dd($author);
         return view('backend.author.list', compact('author'));
     }
+    public function trashed()
+    {
+        $author= Author::onlyTrashed()->orderByDesc('id','desc')->paginate(10);
+        // dd($author);
+        return view('backend.author.trash', compact('author'));
+    }
 
+    public function restore($id){
+        $author = Author::withTrashed()->find($id);
+
+        if ($author) {
+            $author->restore();
+            return redirect()->route('admin.author.index')->with('success', 'Author restored successfully.');
+        } else {
+            return redirect()->route('admin.author.index')->with('error', 'Author not found.');
+        }
+    }
+    public function deleteforce($id){
+        $author = Author::withTrashed()->find($id);
+
+        if ($author) {
+            $author->forceDelete();
+            return redirect()->route('admin.author.index')->with('success', 'Author restored successfully.');
+        } else {
+            return redirect()->route('no_delete')->with('error', 'Author not found.');
+        }
+    }
     /**
      * Show the form for creating a new resource.
      *
@@ -45,16 +71,14 @@ class AuthorController extends Controller
         return redirect()->route('admin.author.index');
     }
 
+    
     /**
      * Display the specified resource.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
-    {
-        // return view('')
-    }
+   
 
     /**
      * Show the form for editing the specified resource.

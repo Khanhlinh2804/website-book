@@ -9,7 +9,6 @@ use App\Models\Order;
 use App\Models\OrderDetail;
 use App\Models\User;
 use App\Models\Product;
-// use App\Auth;
 use App\Helper\CartHelper;
 use App\Models\District;
 
@@ -95,7 +94,7 @@ class OrderController extends Controller
         if(auth()->user()){
             $city = City::all();
             $districts = District::all();
-            return view('fontend.cart.checkout', compact('city', 'cart', 'districts'));
+            return view('fontend.cart.checkout', compact('city','districts', 'cart'));
         }else{
             return view('fontend.account.request');
         }
@@ -107,10 +106,7 @@ class OrderController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
     */
-    public function show($id)
-    {
-        //
-    }
+    
 
     /**
      * Show the form for editing the specified resource.

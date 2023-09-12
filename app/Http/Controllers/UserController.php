@@ -1,9 +1,13 @@
 <?php
 
 namespace App\Http\Controllers;
-use 
+use App\Models\City;
+use App\Models\Order;
+use App\Models\OrderDetail;
+use App\Models\Product;
 use Illuminate\Http\Request;
-
+use App\Helper\CartHelper;
+use Auth;
 class UserController extends Controller
 {
     /**
@@ -13,9 +17,16 @@ class UserController extends Controller
      */
     
     
-    public function profile()
+    public function profile( Order $orders, OrderDetail $orderDetail )
     {
-        return view('fontend.pages.profile');
+        $customer = Auth::user();
+        // dd($orders);
+        return view('fontend.account.profile', compact('customer','orderDetail'));
+    }
+    public function detail(Order $orders,$id,OrderDetail $orderDetail)
+    {
+        $detail = Order::with('order_detail')->find($id);
+        return view('fontend.account.detail', compact('detail','orders'));
     }
     public function history()
     {
@@ -23,20 +34,14 @@ class UserController extends Controller
     }
 
 
-    public function index()
-    {
-        
-    }
+    
 
     /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
-    {
-        //
-    }
+    
 
     /**
      * Store a newly created resource in storage.

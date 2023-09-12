@@ -29,46 +29,23 @@
             <div class="pt-5 pb-5">
                 <iframe width="100%" height="500" src="https://www.youtube.com/embed/cHpcTaELU68" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
             </div>
-            <div class="row pt-5">
-                
-                    <div class="col-lg-4 about-center">
-                        <div class=" center">
-                            <i class="fa-sharp fa-solid fa-gift about-gift " style="color: #ce4d4d; font-size: 60px;  "></i>
-                        </div>
-                        <a href="" class="about-a-icon-text about-text-decoration ">
-                            <p class="about-p-big pt-4"> Make the Best Present </p>
-                            <p>
-                                Make the Best Present
-                                A book is still one of the best presents
-                                for anyone on any occasion.
-                            </p>
+            <div class="row">
+                <h1 style="text-align: center">Blogs</h1>
+            </div>
+            <div class="row ">
+                    @foreach ($blogs as $item)
+                    <div class="col-lg-4 pt-5"  style="display: flex">
+                        <a class=" about-center" href="{{route('blog.show', ['id' => $item->id])}}">
+                            <img src="{{url('uploads')}}/{{$item->image}}" class="about-image" alt="">
                         </a>
-                    </div>
-                    <div class="col-lg-4 about-center">
-                        <div class=" center">
-                            <i class="fa-sharp fa-solid fa-gift about-gift " style="color: #ce4d4d; font-size: 60px;  "></i>
+                        <div class="pl-1">
+                            <h3>{{$item->name}}</h3>
+                            <p>{{$item->title}}</p>
                         </div>
-                        <a href="" class="about-a-icon-text about-text-decoration ">
-                            <p class="about-p-big pt-4"> Find Your Favorite Authors  </p>
-                            <p>
-                                Great writers are pretty inspiring, so we 
-                                A book is still one of the best presents
-                                for anyone on any occasion.
-                            </p>
-                        </a>
+    
                     </div>
-                    <div class="col-lg-4 about-center">
-                        <div class=" center">
-                            <i class="fa-sharp fa-solid fa-gift about-gift " style="color: #ce4d4d; font-size: 60px;  "></i>
-                        </div>
-                        <a href="#" class="about-a-icon-text about-text-decoration ">
-                            <p class="about-p-big pt-4"> Read Reader’s Reviews  </p>
-                            <p>
-                                You will find reviews of magazines, online 
-                                sources and favorite books.
-                            </p>
-                        </a>
-                    </div>
+                    @endforeach
+                    
             </div>
             
 

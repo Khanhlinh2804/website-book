@@ -6,6 +6,11 @@
             
         ],
         [
+            'label' => 'Banner',
+            'route' => 'admin.banner.index',
+           
+        ],
+        [
             'label' => 'Author',
             'route' => 'admin.author.index',
             
@@ -28,6 +33,11 @@
         [
             'label' => 'Order',
             'route' => 'admin.order.index',
+           
+        ],
+        [
+            'label' => 'Blog',
+            'route' => 'admin.blog.index',
            
         ]
     ]

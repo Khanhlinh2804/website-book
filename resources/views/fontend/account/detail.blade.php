@@ -6,7 +6,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-12 pt-4 pb-4 text-align-center">
-                    <h1 class="white-text selector text-align-center ">Profile</h1>
+                    <h1 class="white-text selector text-align-center ">Detail Order</h1>
                 </div>
             </div>
         </div>
@@ -14,68 +14,63 @@
 
     <div class="container">
         <div class="">
-            <p class="profile-name">Hello: <span>Name</span></p>
+            <p class="profile-name">Hello: <span>{{ Auth::user()->name }}</span></p>
         </div>        
         <div class="row">
-            <div class="col-lg-3 white pt-4">
-                 <div class="pl-3">
-                    <h3>Order</h3>
-                    <div class="dividern"></div>
-                    <div class="pl-3">
-
-                        <div>
-                            <a href="" class="category-a"> Order detail</a>
-                        </div>
-                        <div>
-                            <a href="" class="category-a"> Order histor</a>
-                        </div> 
-                    </div>
-                    
-                </div>
-                
-
-            </div>
-            <div class="col-lg-9">
+            
+            <div class="col-lg-12">
                 <table class="table">
                 <thead>
                     <tr>
                     <th>STT</th>
+                    <th>Name</th>
                     <th>Image</th>
-                    <th>Product</th>
-                    <th>Price</th>
                     <th>Quantity</th>
+                    <th>Price</th>
+                    <th>TotlePrice</th>
                     </tr>
                 </thead>
-                <tbody>  
-                    <tr>
-                        <td>1</td>
-                        <td>Name</td>
-                        <td>price</td>
-                        <td>hihi</td>
-                        <td>hihi</td>
-                    </tr>  
+                <tbody> 
+                    <?php $T=0;?>
+                    <?php $QT=0;?>
+                        @foreach ($detail->order_detail as $item)
+                            <tr>
+                                <td>{{ $loop->iteration }}</td>
+                                <td>{{$item->products->name}}</td>
+                                <td>
+                                    <img src="{{url('uploads')}}/{{$item->products->image}}" style="width: 150px; height: 200px;" alt="">
+                                </td>
+                                <td>{{$item->quantity}}</td>
+                                <td>{{$item->price}}$</td>
+                                <td style="color: red">{{number_format($item['quantity'] * $item['price'])}} $</td>
+                                
+                            </tr>  
+                        <?php $T += $item->quantity * $item->price;?>
+                        <?php $QT += $item->quantity;?>
+                        @endforeach
+                    
+
                 </tbody>
             </table>
             <div class="white ">
                 <div class="row">
-                    
-                    <div class="col-lg-4">
-                        <p class="profile-order-status">Order status: <span style="color: #de3241"> đang giao</span></p>
-                    </div>
                     <div class="col-lg-8">
                         <p class="cart-totals"> Cart totals</p>
                         <div class="d-flex subtotals">
-                            <p class="profile-cart-subtotals">Subtotals</p>
-                            <p class="profile-cart-price">hihihi $</p>
+                            <p class="profile-cart-subtotals">TotalQuantity</p>
+                            <p class="profile-cart-price">{{$QT}} </p>
                         </div>
                         <div class="d-flex">
                             <p class="profile-cart-subtotals">totals</p>
-                            <p class="profile-cart-price">hihihi $</p>
+                            <p class="profile-cart-price">{{$T}} $</p>
                         </div>   
                     </div>
+                    <div class="col-lg-1"></div>
+                    <div class="col-lg-2" style="padding-top: 125px">
+                        <a href="{{route('user.profile')}}" class=" p-3 pl-4 pr-4 bold-text white-text black-backgroundS borderless-button">
+                            BACK PROFILE </a>
+                    </div>
                 </div>
-            
-
             </div>
             </div>
         </div>

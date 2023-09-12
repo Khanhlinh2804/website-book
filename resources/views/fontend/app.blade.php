@@ -22,6 +22,7 @@
     {{-- CSS  --}} 
     <link rel="stylesheet" href="{{asset("fontend/css/app.css") }}">
     <link rel="stylesheet" href="{{asset("fontend/css/cart.css") }}">
+    <link rel="stylesheet" href="{{asset("fontend/css/about.css") }}">
     <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
     <link rel="stylesheet" href="/resources/demos/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/themes/base/jquery-ui.min.css" integrity="sha512-ELV+xyi8IhEApPS/pSj66+Jiw+sOT1Mqkzlh8ExXihe4zfqbWkxPRi8wptXIO9g73FSlhmquFlUOuMSoXz5IRw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -31,7 +32,7 @@
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
-                <a class="navbar-brand" href="">
+                <a class="navbar-brand" href="{{route('home.index')}}">
                    <img src="https://booklovers.ancorathemes.com/wp-content/uploads/2021/02/logo-1.png" alt="">
                 </a>
                 
@@ -56,19 +57,27 @@
                         <li>
                             <a class="nav-link pl-5" href="{{route('home.about')}}">ABOUT</a>
                         </li>
-                        {{-- <li>
-                            <a class="nav-link pl-5" href="#">BLOG</a>
-                        </li> --}}
                         
-                       
-                        <li class="nav-item">
+                       @if ($cart->total_quantity == 0)
+                           <li class="nav-item">
                             <div class="d-flex">
-                            <a class="nav-link pl-5" href="{{route('cart.cart')}}" >
+                            <a class="nav-link pl-5" href="" onclick="return confirm('cart empty');" >
                                     <i class="fa-solid fa-bag-shopping" style="color: #0e0d0d;"></i> 
                                     {{$cart->total_quantity}}
                                 </a>
                             </div>
                         </li>
+                       @else
+                       <li class="nav-item">
+                           <div class="d-flex">
+                           <a class="nav-link pl-5" href="{{route('cart.cart')}}" >
+                                   <i class="fa-solid fa-bag-shopping" style="color: #0e0d0d;"></i> 
+                                   {{$cart->total_quantity}}
+                               </a>
+                           </div>
+                       </li>
+                           
+                       @endif
                         @guest
                             @if (Route::has('login'))
                                 <li class="nav-item"> 
@@ -94,11 +103,21 @@
                                         Logout
                                     </a>
 
+                                    {{-- <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                        @csrf
+                                    </form> --}}
+                                    <a class="dropdown-item" href="{{ route('user.profile') }}">
+                                        Profile
+                                    </a>
+
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                                         @csrf
                                     </form>
+                                    
                                 </div>
                             </li>
+                            
+                            
                         @endguest
                     </ul>
                 </div>
