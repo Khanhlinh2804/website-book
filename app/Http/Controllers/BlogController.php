@@ -105,9 +105,10 @@ class BlogController extends Controller
     public function show($id)
     {
         $blogs = Blog::find($id);
-        $data = Blog::inRandomOrder()->limit(3)->where('status',1);
+        $data = Blog::inRandomOrder()->limit(3)->where('status',1)->get();
         return view('fontend.pages.blogs', compact('blogs','data'));
     }
+    
 
     /**
      * Show the form for editing the specified resource.

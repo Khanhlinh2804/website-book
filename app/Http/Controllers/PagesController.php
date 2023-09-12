@@ -70,6 +70,12 @@ class PagesController extends Controller
         return view('fontend.pages.detail', compact('randomcard','pro'));
     }
 
+    // public function random(){
+    //     $data = Blog::inRandomOrder()->limit(3)->where('status',1);
+    //     return view('fontend.pages.blogs', compact('data'));
+
+    // }
+
 
 
     

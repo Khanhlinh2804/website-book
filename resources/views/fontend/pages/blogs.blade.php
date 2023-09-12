@@ -29,7 +29,18 @@
         <div class="row">
             <h1 class="text-center pt-5 pb-3 ">Related Blogs</h1>
             <div class="divide center pr-5"></div>
-             
+            @foreach ($data as $item)
+                <div class="col-lg-4 pt-5"  style="display: flex">
+                        <a class=" about-center" href="{{route('blog.show', ['id' => $item->id])}}">
+                            <img src="{{url('uploads')}}/{{$item->image}}" class="about-image" alt="">
+                        </a>
+                        <div class="pl-1">
+                            <h3>{{$item->name}}</h3>
+                            <p>{{$item->title}}</p>
+                        </div>
+    
+                    </div>
+            @endforeach
             
         </div>
     </div>

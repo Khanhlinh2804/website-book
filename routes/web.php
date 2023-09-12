@@ -43,7 +43,6 @@ use App\Http\Controllers\Auth\LoginController;
         Route::get('/detail/{id}', [PagesController::class, 'detail'])->name('home.detail');
         Route::get('/about', [BlogController::class, 'about'])->name('home.about');
         Route::get('/blog/detail/{id}', [BlogController::class, 'show'])->name('blog.show');
-        // Route::get('/blogs/{id}', [BlogController::class, 'about'])->name('home.about');
     });
     Route::get('/sign-up', [PagesController::class, 'sign_up'])->name('user.sign-up');
     // Cart 
