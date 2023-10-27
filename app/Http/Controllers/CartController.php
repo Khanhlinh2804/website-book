@@ -19,7 +19,6 @@ class CartController extends Controller
     public function remove(CartHelper $cart,$id){
         
         $cart->remove($id);
-
         return redirect()->back();
     
     }
@@ -46,3 +45,4 @@ class CartController extends Controller
     
 
 }
+ 

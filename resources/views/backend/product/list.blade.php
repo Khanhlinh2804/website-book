@@ -50,7 +50,6 @@
                     <th>Quantity</th>
                     <th>Image</th>
                     <th>Author</th>
-                    {{-- <th>Classify</th> --}}
                     <th>Description</th>
                     <th>Status</th>
                     <th>Action</th>
